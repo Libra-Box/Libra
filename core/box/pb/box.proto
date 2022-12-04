@@ -1,0 +1,1116 @@
+syntax = "proto3";
+
+option go_package = "pb";
+
+// protoc --gofast_out=. --proto_path=. *.proto
+// protoc --js_out=import_style=commonjs,binary:. *.proto
+// relay 代理传输
+// "/box/relay/1.0.0"
+// "http://122.9.61.5:9988/v1/box/relay/1.0.0"
+message RelayReq{
+  string ProtocolId = 1;
+  bytes BodyBuffer = 2 ;
+}
+
+message RelayResp{
+  string ProtocolId = 1;
+  bytes BodyBuffer = 2 ;
+  uint32 code = 3;
+}
+
+
+// response code
+enum Code {
+  Success = 0;           // 成功
+  Failure = 1;           // 失败
+  InvalidSignature = 2;  // 无效的签名
+  TokenError = 3;        // token 错误
+  TokenExpired = 4;      // token 过期
+  DeviceActivated = 5;   // 设备已经激活
+  DbError = 6;           // 数据库操纵失败
+  IoError = 7;           // 文件操纵失败
+  UserPassError = 8;     // 用户名或者密码错误
+  RequestParamError = 9; // 请求参数错误
+  NoEnoughSpace = 10;    // 可用空间不足
+  NetworkError = 11;     // 网络错误
+  RequestTimeout = 12;   // 请求超时
+  UserDisabled = 13;     // 账户禁用
+  UserCountIsOver = 14;  //账户数量已满
+  FileNameExist = 15;    //文件名已存在
+  UserNameNotExist = 16;   //用户不存在
+  SystemFile = 17;         //系统文件
+  BackingUp = 18;         //正在备份
+  Md5IsExist=19;          //md5存在
+  SizeInsufficient=20;    //容量不够
+}
+
+message CommonResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+}
+
+////////////////////////////////////////////////////////////////////////
+
+// "/box/ping/1.0.0"
+message PingReq {
+  uint32 nonce = 1;
+}
+
+message PingResp {
+  uint32 nonce = 1;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 获取设备ipfs网络地址
+// "/box/peer_address/1.0.0"
+// Http Post Json : http://122.9.61.5:16516/v1/peer_addr
+message PeerAddressReq {
+  uint32 nonce = 1;
+  string peerId = 2;
+}
+
+message PeerAddressResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  repeated string peerAddress = 3;
+  string msg = 4;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// 用户数据
+message User {
+  uint32 id = 1;
+  string name = 2;
+  int32  role = 3;
+  uint64 allocatedSpace = 4;  //已分配空间
+  uint64 usedSpace = 5;       //已使用空间
+  int32 status = 6;          //用户状态: 0-可用  1-禁用
+  string deviceName = 7;      //最后登录的手机设备名称
+  int64 createdAt = 8;        //创建时间
+  string password = 9;        //密码，管理可以看到子账号的密码
+  int32 syncFil = 10;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 磁盘空间
+message DiskSpace {
+  uint64 total = 1;       //总空间
+  uint64 adminUsed = 2;   //管理员已使用空间
+  uint64 otherAllocated = 3;   //其他账号已分配
+}
+
+////////////////////////////////////////////////////////////////////////
+//  获取设备状态
+// "/box/device/state/1.0.0"
+message DeviceStateReq {
+  uint32 nonce = 1;
+  string peerId = 2;
+}
+
+message DeviceStateResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  int32  state = 3; // 0-未激活 1-已经激活
+  string adminName = 4;  //  管理员昵称
+  bytes adminAvatar = 5;  // 管理员头像
+}
+
+////////////////////////////////////////////////////////////////////////
+//  激活设备
+// "/box/activate/1.0.0"
+message ActivateReq {
+  uint32 nonce = 1;
+  string peerId = 2;
+  string name = 3;
+  string password = 4;
+  string randNonce = 5;
+  string signature = 6;
+  string deviceName = 7;
+}
+
+message ActivateResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  string token = 4;
+  User userInfo = 5;
+}
+
+//  忘记密码
+// "/box/forget_pass/1.0.0"
+message ForgetPassReq {
+  uint32 nonce = 1;
+  string peerId = 2;
+  string signature = 3;
+  string name = 4;
+}
+
+message ForgetPassResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  string token = 4;
+  User userInfo = 5;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 登录
+// "/box/login/1.0.0"
+message LoginReq {
+  uint32 nonce = 1;
+  string peerId = 2;
+  string name = 3;
+  string password = 4;
+  string deviceName = 5;
+}
+
+message LoginResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  string token = 4;
+  User userInfo = 5;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 添加用户
+// "/box/user/add/1.0.0"
+message AddUserReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string name = 3;
+  string password = 4;
+  uint64 space = 5;
+}
+//CommonResp
+
+////////////////////////////////////////////////////////////////////////
+// 获取用户信息
+// "/box/user/info/1.0.0"
+message UserInfoReq {
+  uint32 nonce = 1;
+  string token = 2;
+}
+
+message UserInfoResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  User   user = 4;
+  DiskSpace space = 5;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 获取用户列表
+// "/box/user/list/1.0.0"
+message UserListReq {
+  uint32 nonce = 1;
+  string token = 2;
+}
+
+message UserListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  repeated User  user = 4;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 修改自己的密码
+// "/box/user/update_pass/1.0.0"
+message UpdatePasswordReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string oldPass = 3;
+  string newPass = 4;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 修改自己的昵称
+// "/box/user/rename/1.0.0"
+message UserRenameReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string name = 3;
+}
+// CommonResp
+
+////////////////////////////////////////////////////////////////////////
+// 获取用户头像
+// "/box/user/avatar/get/1.0.0"
+message GetUserAvatarReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 userId = 3;
+}
+
+message GetUserAvatarResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  bytes avatarData = 4;
+}
+
+////////////////////////////////////////////////////////////////////////
+// 更新用户头像
+// "/box/user/avatar/update/1.0.0"
+message UpdateUserAvatarReq {
+  uint32 nonce = 1;
+  string token = 2;
+  bytes avatarData = 3;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 管理员重置他人的密码
+// "/box/user/reset_pass/1.0.0"
+message ResetPasswordReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+  string newPass = 4;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 管理员禁用/启用子账号
+// "/box/user/enable/1.0.0"
+message EnableUserReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+  bool   enable = 4;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 管理员删除子账号
+// "/box/user/delete/1.0.0"
+message DeleteUserReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 管理员调整子账号空间
+// "/box/user/change_space/1.0.0"
+message ChangeSpaceReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+  uint64 space = 4;
+}
+// CommonResp
+
+///////////////////////////////////////////////////////////////////////
+//  扫描登录流程
+// 1. PC端生成随机字符串，构成二维码
+// 2. APP 扫描二维码，发送二维码的随机字符串、盒子的peer_id、token到中心服务器
+// 3. PC端通过随机数从中心服务器获取盒子的网络地址和token。
+// 4. PC端携带token访问盒子
+
+///////////////////////////////////////////////////////////////////////
+// 扫码登录-APP端扫描二维码 （APP => 服务器）
+// "/box/qrcode/scan/1.0.0"
+// Http Post Json : http://122.9.61.5:16516/v1/scan_qrcode
+message ScanQrcodeReq {
+  uint32 nonce = 1;
+  string qrcode = 2;
+  string peerId = 3;
+  string token = 4;
+}
+// CommonResp
+
+////////////////////////////////////////////////////////////////////////
+// 扫码登录-PC端获取盒子地址  (PC => 服务器)
+// "/box/qrcode/get_token/1.0.0"
+// Http Post Json : http://122.9.61.5:16516/v1/qrcode_token
+message GetTokenByQrcodeReq {
+  uint32 nonce = 1;
+  string qrcode = 2;
+}
+
+message GetTokenByQrcodeResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  string token = 4;
+  string peerId = 5;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 文件信息
+
+message FileItem {
+  string id = 1;
+  string name = 2;
+  int64  size = 3;
+  bool   isFolder = 4;
+  int64  createdAt = 5;
+  int64  updatedAt = 6;
+  string md5 = 7;
+  bool  star = 8;
+  bool  share = 9;
+  int32 subFiles = 10; // 子文件个数
+  string kind = 11;  // 文件种类
+  int32  shareCount = 12; // 内部分享用户数
+  string ext = 13;//文件后缀
+  string parentId = 14;
+  string parentName = 15;
+  int32 isSystem = 16;
+  string cid = 17;
+  string formDevice = 18;
+  int64 startAt = 19;
+  int64 endAt = 20;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 新建文件夹
+// "/box/file/new_folder/1.0.0"
+message NewFolderReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string id = 3;
+  string name = 4;
+  string parentId = 5;
+  int32  isSystem = 6;//1系统文件
+  string formDevice = 7;//来源：DESKTOP-SD3UMFH(上传到同步文件夹才需要)
+}
+
+message NewFolderResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string  id = 3;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 文件上传
+// "/box/file/upload/1.0.0"
+message UploadFileReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string name = 3;
+  string id = 4;
+  string parentId = 5;
+  int64  size = 6;
+  int64  bytes_from = 7;
+  bytes  data = 8;
+  string md5=9;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 文件下载
+// "/box/file/download/1.0.0"
+message DownloadFileReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string fileId = 3;
+  int64  bytes_from = 4;
+  int64  bytes_count = 5;
+  int32  userId = 6;
+}
+
+message DownloadFileResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  string name = 4;
+  int64  fileSize = 5;
+  bytes  data = 6;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 文件（夹）列表
+// "/box/file/list/1.0.0"
+message FileListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string parentId = 3;  // "all":所有  空:根目录  非空: 非根目录
+  int32  dirMask = 4;  // -1:所有  0：文件  1：文件夹
+  int32  fileType = 5;  // 0:所有 1:音频 2：视频 3：文档  4；相册 5：压缩包
+  int32  starMask = 6;  // -1: 所有  0：未收藏  1：已收藏
+  string keyword = 7;  // 搜索关键字
+  int32  order = 8;  // 排序规则 0:名称  1:时间  2：大小  3：后缀
+  int32  offset = 9;  // sql的offset
+  int32  limit = 10; // sql的limit
+  int32  isEqual = 11;//用于匹配keyword 0、like 1、=
+}
+
+message FileListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  FileItem files = 5;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 修改文件(夹)名
+// "/box/file/rename/1.0.0"
+message FileRenameReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string fileId = 3;
+  string name = 4;
+  string parentId = 5;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 删除文件（夹）
+// "/box/file/delete/1.0.0"
+message FileDeleteReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 移动文件（夹）
+// "/box/file/move/1.0.0"
+message FileMoveReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string  fileId = 3;
+  string  newParentId = 4;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+//  复制文件（夹）
+// "/box/file/copy/1.0.0"
+message FileCopyReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string fileId = 3;
+  string newParentId = 4;
+  string newFileId = 5;
+  string newFileName = 6;
+  int32  userId = 7;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 收藏文件（夹）
+// "/box/file/star/1.0.0"
+message FileStarReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 取消收藏文件（夹）
+// "/box/file/unstar/1.0.0"
+message FileUnstarReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 回收站Item
+message RecycleItem {
+  int32  id = 1;
+  string fileId = 2;
+  string name = 3;
+  int64  size = 4;
+  bool   isFolder = 5;
+  int64  createdAt = 6;
+  string ext = 7;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 回收站列表
+// "/box/recycle/list/1.0.0"
+message RecycleListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32  order = 3;
+  int32  offset = 4;
+  int32  limit = 5;
+  string keyword = 7;  // 搜索关键字
+  int32  fileType = 8;  // 0:所有 1:音频 2：视频 3：文档  4；相册 5：压缩包
+}
+
+
+message RecycleListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  RecycleItem items = 5;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 回收站删除文件（夹）
+// "/box/recycle/delete/1.0.0"
+message RecycleDeleteReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated int32 ids = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 回收站恢复删除文件（夹）
+// "/box/recycle/restore/1.0.0"
+message RecycleRestoreReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated int32 ids = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 共享文件（夹）
+// "/box/file/share/1.0.0"
+message FileShareReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+  string userIdList = 4;
+  int64 startAt = 5;
+  int64 endAt = 6;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 取消共享文件（夹）
+// "/box/file/unshare/1.0.0"
+message FileUnShareReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+}
+//CommonResp
+
+// 关闭共享文件（夹）
+// "/box/file/close_share/1.0.0"
+message FileCloseShareReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 指定人员的共享文件（夹）列表
+// "/box/file/sharelist/1.0.0"
+message ShareListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  uint32 userId = 3;
+  string userName = 4;
+  string parentId = 5;  // "all":所有  空:根目录 非空: 非根目录
+  int32  dirMask = 6;  // -1:所有  0：文件  1：文件夹
+  int32  fileType = 7;  // 0:所有 1:音频 2：视频 3：文档  4；相册 5：压缩包
+  int32  starMask = 8;  // 1:
+  string keyword = 9;  // 搜索关键字
+  int32  order = 10;  // 排序规则 0:名称  1:时间  2：大小  3：后缀
+  int32  offset = 11;  // sql的offset
+  int32  limit = 12; // sql的limit
+  string ext = 13;//后缀
+
+}
+///////////////////////////////////////////////////////////////////////
+// 共享Item
+message ShareItem {
+  string  id = 1;
+  string fileId = 2;
+  string name = 3;
+  int64  size = 4;
+  bool   isFolder = 5;
+  string fileType = 6;
+  int64  createdAt = 7;
+  string userName = 8;
+  int64  endAt = 9;
+  int64  countPeople = 10;
+  string ext = 11;//后缀
+  bool   share = 12;
+  string md5 = 13;
+  string parentId = 14;
+  int32  subFiles = 16; // 子文件个数
+  string cid = 17;
+  int64  startAt = 18;
+}
+message ShareListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  ShareItem items = 5;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 统计用户共享文件（夹）
+// "/box/file/usersharelist/1.0.0"
+message UserShareListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string keyword = 3;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 用户共享Item
+message UserShareItem {
+  int32  id = 1;
+  string fileId = 2;
+  int32  userId = 3;
+  string userName = 4;
+  int64  folderCount = 5;
+  int64  fileCount = 6;
+}
+message UserShareListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  UserShareItem items = 5;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 修改共享文件（夹）
+// "/box/file/edit_share/1.0.0"
+message FileEditShareReq {
+  uint32 nonce = 1;
+  string token = 2;
+  repeated string fileIds = 3;
+  string userIdList = 4;
+  int64 startAt = 5;
+  int64 endAt = 6;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 备份通讯录
+// "/box/addressbook/backup/1.0.0"
+message AddressbookBackupReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string deviceName = 3;  // 手机名称
+  string content = 4;  // 通讯录内容, 前端自定义格式
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 删除通讯录
+// "/box/addressbook/delete/1.0.0"
+message AddressbookDeleteReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 id = 3;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 删除所有通讯录
+// "/box/addressbook/delete_all/1.0.0"
+message AddressbookDeleteAllReq {
+  uint32 nonce = 1;
+  string token = 2;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 获取通讯录列表
+// "/box/addressbook/list/1.0.0"
+message AddressbookListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 offset = 3;
+  int32 limit = 4;
+}
+
+message Addressbook {
+  uint32 id = 1;
+  uint64 backupAt = 2;
+  string deviceName = 3; // 手机名称
+  string content = 4; // 通讯录内容, 前端自定义格式
+}
+
+message AddressbookListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated Addressbook addressbooks = 5;
+}
+// 获取指定通讯录
+// "/box/appoint_address/list/1.0.0"
+message AppointAddressListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32  id = 3;
+}
+message AppointAddressListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated Addressbook addressbooks = 5;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 获取指定文件夹下的数据
+// "/box/file/appointlist/1.0.0"
+message AppointFileListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string parentId = 3;
+  int32  isFolder = 4;
+}
+message AppointFileListItem {
+  string  id = 1;
+  string   uuid = 2;
+  string   name = 3;
+  string   ext = 4;
+  int64    size = 5;
+  string   parentId = 6;
+  bool     isFolder = 7;
+  string   paths = 8;
+  string   md5 = 9;
+  string   children = 10;
+  string   cid = 11;
+  string   filePaths = 12;
+}
+message AppointFileListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  AppointFileListItem items = 5;
+}
+// 获取指定备份文件夹下的数据
+// "/box/file/backup_list/1.0.0"
+message FileBackupListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string formDevice = 3;
+  int32  offset = 4;
+  int32  limit = 5;
+}
+message FileBackupListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  AppointFileListItem items = 5;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 查询文件md5是否存在
+// "/box/file/searchmd5/1.0.0"
+message SearchFileMd5Req {
+  uint32 nonce = 1;
+  string token = 2;
+  string md5 = 3;
+}
+message SearchFileMd5Resp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string  id = 3;
+  string  cid = 4;
+}
+//CommonResp
+//  添加文件（夹）记录
+// "/box/file/file_record/1.0.0"
+message FileRecordReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string fileId = 3;
+  string parentId = 4;
+  string name = 5;
+  string cid = 6;
+  string md5 = 7;
+  int32  isFolder = 8;
+  int64  size = 9;
+}
+//CommonResp
+
+
+///////////////////////////////////////////////////////////////////////
+// 备份记录
+// "/box/backups/list/1.0.0"
+message BackupsListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 offset = 3;
+  int32 limit = 4;
+}
+message BackupsListItem {
+  int32  id = 1;
+  string   deviceName = 2;
+  int32   fileCount = 3;
+  int64    createdAt = 4;
+}
+message BackupsListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  BackupsListItem items = 5;
+}
+
+// 添加备份记录
+// "/box/backups/add/1.0.0"
+message BackupsAddReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string deviceName = 3;
+  int32  fileCount = 4;
+}
+//CommonResp
+
+///////////////////////////////////////////////////////////////////////
+// 日志
+// "/box/log/list/1.0.0"
+message FileLogListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 status = 3;
+  int32 searchTime = 4;
+}
+message FileLogListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  id = 4;
+  string   fileId = 5;
+  int32 status = 6;
+  string idList = 7;
+  int64    createdAt = 8;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 同步设置
+// "/box/sync/list/1.0.0"
+message SyncListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  string deviceName = 3;
+}
+message SyncListItem {
+  int32    id = 1;
+  string   deviceName = 2;
+  string   devicePath = 3;
+  string   fileId = 4;
+  int32    status = 5;
+  int64    createdAt = 6;
+}
+message SyncListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  SyncListItem items = 5;
+}
+
+// 添加同步设置
+// "/box/sync/add/1.0.0"
+message SyncAddReq {
+  uint32   nonce = 1;
+  string   token = 2;
+  string   deviceName = 3;
+  string   devicePath = 4;
+  string   fileId = 5;
+  int32    status = 6;
+}
+//CommonResp
+
+// 修改同步设置
+// "/box/sync/edit/1.0.0"
+message SyncEditReq {
+  uint32    nonce = 1;
+  string    token = 2;
+  int32     id = 3;
+  string    deviceName = 4;
+  string    devicePath = 5;
+  string    fileId = 6;
+  int32     status = 7;
+}
+//CommonResp
+// 删除同步设置
+// "/box/sync/del/1.0.0"
+message SyncDelReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32  id = 3;
+}
+//CommonResp
+
+// box升级
+// "/box/update/1.0.0"
+message BoxUpdateReq {
+  string token = 1;
+  string md5 = 2;
+  string version = 3;
+  string url = 4;
+}
+message BoxUpdateResp {
+  Code   code = 1;
+  int32 status = 2;
+  string msg = 3;
+}
+// 获取box参数
+// "/box/deviceInfo/1.0.0"
+message DeviceInfoReq {
+  string token = 1;
+}
+message DeviceInfoResp {
+  Code   code = 1;
+  string version = 2;
+  string sn = 3;
+  string framework = 4;
+}
+
+// 获取磁盘空间
+// "/box/diskCount/1.0.0"
+message DiskCountReq {
+  string peerId = 1;
+}
+message DiskCountResp {
+  Code   code = 1;
+  uint64 deviceCount = 2;
+  uint64 deviceUsed = 3;
+}
+// 创建钱包地址 0 所有钱包，1 Fil钱包，2 ETH系列钱包
+// "/box/createWallet/1.0.0"
+message CreateWalletReq {
+  int32 type = 1;
+  string token = 2;
+}
+
+// 获取钱包地址 0 所有钱包，1 Fil钱包，2 ETH系列钱包
+// "/box/getWallet/1.0.0"
+message GetWalletReq {
+  int32 type = 1;
+  string token = 2;
+}
+message WalletItem {
+  int32    type = 1;
+  string   address = 2;
+}
+message GetWalletResp {
+  Code   code = 1;
+  repeated  WalletItem items = 2;
+}
+
+
+// 获取钱包地址的key 0 所有钱包，1 Fil钱包，2 ETH系列钱包
+// "/box/getWalletKey/1.0.0"
+message GetWalletKeyReq {
+  string token = 1;
+  string address = 2;
+}
+
+message GetWalletKeyResp {
+  Code   code = 1;
+  string addressKey = 2;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 同步数据到FileCoin
+// "/box/sync_fil/1.0.0"
+message EnableFilReq {
+  uint32 nonce = 1;
+  string token = 2;
+  bool   enable = 3;
+  string relayHost = 4;
+  string minerId = 5;
+  string price = 6;
+  int64  sizeSum=7;
+}
+// CommonResp
+
+//============= Filecoin backup
+//备份文件
+// "/lotus/filecoinBackup"
+message UploadFileToFilcoinReq {
+  string ipfsCid = 1;
+  bytes  data = 2;
+  int64  fileSize = 3;
+  int64  bytes_from = 4;
+  string  peerId = 5;
+}
+//查询备份状态
+// "/lotus/getBackUpStatus"
+message GetBackUpStatusReq {
+  string ipfsCid = 1;
+}
+
+message GetBackUpStatusResp {
+  Code code = 1;
+  string dealCid = 2;
+  string pieceCid = 3;
+  string status = 4;
+  bool Verified = 5;
+  uint64 Duration = 6;
+}
+
+// 获取miner
+// "/api/getMiner"
+message GetMinerReq {
+  string peerId = 1;
+}
+message GetMinerResp {
+  Code   code = 1;
+  repeated Miner miner = 2;
+}
+
+message Miner{
+  string MinerId = 1;
+  string Storage = 2;
+  string Price = 3;
+  string RelayHost = 4;
+}
+
+///////////////////////////////////////////////////////////////////////
+// 备份记录
+// "/box/cidbackups/list/1.0.0"
+message CidBackupsListReq {
+  uint32 nonce = 1;
+  string token = 2;
+  int32 offset = 3;
+  int32 limit = 4;
+}
+message CidBackupsListItem {
+  int32   id = 1;
+  string  minerId = 2;
+  string   price = 3;
+  int64   createdAt = 4;
+  int64   fileCount = 5;
+  int64   successFile=6;
+  string  dealCid=7;
+  int64   fileSize = 8;
+}
+message CidBackupsListResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+  repeated  CidBackupsListItem items = 5;
+}
+// 备份记录
+// "/box/backupcount/list/1.0.0"
+message BackupCountReq {
+  uint32 nonce = 1;
+  string token = 2;
+}
+
+message BackupCountResp {
+  uint32 nonce = 1;
+  Code   code = 2;
+  string msg = 3;
+  int32  total = 4;
+}
