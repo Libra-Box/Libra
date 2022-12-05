@@ -12,19 +12,12 @@
 
 ## 如何部署
 
-*1、源码部署*
+*源码部署*
 
 > git clone https://github.com/Libra-Box/Libra.git
 >
 > make build
 
-*2、二进制下载*
-
->wget https://github.com/Libra-Box/Libra.git
-
-*3、docker快速部署*
-
->docker pull Libra
 
 
 ##产品展示网站

@@ -11,19 +11,12 @@
 
 ## How to deploy
 
-*1、Source code deployment*
+*Source code deployment*
 
 > git clone https://github.com/Libra-Box/Libra.git
 >
 > make build
 
-*2、Binary download*
-
->wget https://github.com/Libra-Box/Libra.git
-
-*3、Docker rapid deployment*
-
->docker pull Libra
 
 
 ##Product display website
