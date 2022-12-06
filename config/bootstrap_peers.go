@@ -14,7 +14,9 @@ import (
 //
 // NOTE: This is here -- and not inside cmd/ipfs/init.go -- because of an
 // import dependency issue. TODO: move this into a config/default/ package.
-var DefaultBootstrapAddresses = []string{}
+var DefaultBootstrapAddresses = []string{
+	"/ip4/103.39.231.191/tcp/4031/p2p/12D3KooWH8bQr5iQQH5Dcd9odvZCFTV1ktPbC4Jh5Wvf7TMKJh1N",
+}
 
 // ErrInvalidPeerAddr signals an address is not a valid peer address.
 var ErrInvalidPeerAddr = errors.New("invalid peer address")
