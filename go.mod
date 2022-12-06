@@ -94,7 +94,7 @@ require (
 	github.com/liyue201/golib v0.0.0-20210225015707-e527cc337867
 	github.com/miekg/dns v1.1.50
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/multiformats/go-multiaddr v0.7.0
+	github.com/multiformats/go-multiaddr v0.8.0
 	github.com/multiformats/go-multiaddr-dns v0.3.1
 	github.com/multiformats/go-multibase v0.1.1
 	github.com/multiformats/go-multicodec v0.7.0
