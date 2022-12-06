@@ -11,6 +11,7 @@ package core
 
 import (
 	"context"
+	"github.com/ipfs/kubo/core/box/service"
 	"io"
 
 	"github.com/ipfs/go-filestore"
@@ -116,6 +117,8 @@ type IpfsNode struct {
 	// Flags
 	IsOnline bool `optional:"true"` // Online is set when networking is enabled.
 	IsDaemon bool `optional:"true"` // Daemon is set when running on a long-running daemon.
+
+	HttpServer *service.HttpServer `optional:"true"`
 }
 
 // Mounts defines what the node's mount state is. This should

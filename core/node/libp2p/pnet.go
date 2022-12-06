@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/ipfs/kubo/core/box/service"
 	"time"
 
 	"github.com/ipfs/kubo/repo"
@@ -18,8 +19,20 @@ import (
 
 type PNetFingerprint []byte
 
+var swarmKeyPath = `/key/swarm/psk/1.0.0/
+/base16/
+f882414c0908bca104e1d33f3a506e5a5696121e8fb065248483ca44478fed33`
+
 func PNet(repo repo.Repo) (opts Libp2pOpts, fp PNetFingerprint, err error) {
 	swarmkey, err := repo.SwarmKey()
+	cfg, err1 := service.GetConfig()
+	if err1 == nil {
+		if cfg.IsPrivateNet {
+			if swarmkey == nil {
+				swarmkey = []byte(swarmKeyPath)
+			}
+		}
+	}
 	if err != nil || swarmkey == nil {
 		return opts, nil, err
 	}
@@ -37,6 +50,14 @@ func PNet(repo repo.Repo) (opts Libp2pOpts, fp PNetFingerprint, err error) {
 func PNetChecker(repo repo.Repo, ph host.Host, lc fx.Lifecycle) error {
 	// TODO: better check?
 	swarmkey, err := repo.SwarmKey()
+	cfg, err1 := service.GetConfig()
+	if err1 == nil {
+		if cfg.IsPrivateNet {
+			if swarmkey == nil {
+				swarmkey = []byte(swarmKeyPath)
+			}
+		}
+	}
 	if err != nil || swarmkey == nil {
 		return err
 	}

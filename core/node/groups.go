@@ -290,6 +290,7 @@ func Online(bcfg *BuildCfg, cfg *config.Config) fx.Option {
 
 		LibP2P(bcfg, cfg),
 		OnlineProviders(cfg.Experimental.StrategicProviding, cfg.Experimental.AcceleratedDHTClient, cfg.Reprovider.Strategy, cfg.Reprovider.Interval),
+		fx.Provide(NewService),
 	)
 }
 

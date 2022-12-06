@@ -803,6 +803,7 @@ func serveHTTPGateway(req *cmds.Request, cctx *oldcmds.Context) (<-chan error, e
 
 	for _, listener := range listeners {
 		fmt.Printf("Gateway (%s) server listening on %s\n", gwType, listener.Multiaddr())
+		fmt.Printf("HttpServer (%s) server listening on %s\n", gwType, cfg.Http.ListenAddress)
 	}
 
 	cmdctx := *cctx

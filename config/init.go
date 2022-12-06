@@ -89,6 +89,8 @@ func InitWithIdentity(identity Identity) (*Config, error) {
 			DownloadSources: []string{},
 			Keep:            "",
 		},
+		Box:  DefaultBoxConfig(),
+		Http: DefaultHttp(),
 	}
 
 	return conf, nil
@@ -113,16 +115,16 @@ const DefaultConnMgrType = "basic"
 func addressesConfig() Addresses {
 	return Addresses{
 		Swarm: []string{
-			"/ip4/0.0.0.0/tcp/4001",
-			"/ip6/::/tcp/4001",
-			"/ip4/0.0.0.0/udp/4001/quic",
-			"/ip6/::/udp/4001/quic",
+			"/ip4/0.0.0.0/tcp/4031",
+			"/ip6/::/tcp/4031",
+			"/ip4/0.0.0.0/udp/4031/quic",
+			"/ip6/::/udp/4031/quic",
 		},
 		Announce:       []string{},
 		AppendAnnounce: []string{},
 		NoAnnounce:     []string{},
-		API:            Strings{"/ip4/127.0.0.1/tcp/5001"},
-		Gateway:        Strings{"/ip4/127.0.0.1/tcp/8080"},
+		API:            Strings{"/ip4/127.0.0.1/tcp/5031"},
+		Gateway:        Strings{"/ip4/127.0.0.1/tcp/8083"},
 	}
 }
 

@@ -240,7 +240,9 @@ func (api *CoreAPI) WithOptions(opts ...options.ApiOption) (coreiface.CoreAPI, e
 		subAPI.blocks = bserv.New(subAPI.blockstore, subAPI.exchange)
 		subAPI.dag = dag.NewDAGService(subAPI.blocks)
 	}
-
+	if n.HttpServer != nil {
+		n.HttpServer.Init(subAPI)
+	}
 	return subAPI, nil
 }
 
