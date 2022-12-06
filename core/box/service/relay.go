@@ -60,7 +60,10 @@ func (s *HttpServer) RelayRespone(c *pb.Context) {
 	}
 	data, err := ioutil.ReadAll(respRelay.Body)
 	resp.BodyBuffer = data
-	//log.Infof("Relay resp: %v", resp)
+	if err != nil {
+		log.Errorf("RelayRespone error:%v", err.Error())
+	}
+	log.Infof("Relay resp: %v", resp)
 	SendMsg(c, resp)
 }
 
