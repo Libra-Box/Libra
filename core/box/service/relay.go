@@ -44,20 +44,20 @@ func (s *HttpServer) RelayRespone(c *pb.Context) {
 	reqRelay.Header.Set("PEER_ID", c.Stream.Conn().LocalPeer().String())
 	reqRelay.Header.Set("Content-Type", "application/x-protobuf")
 	respRelay, err := client.Do(reqRelay)
-	log.Infof("respRelay StatusCode: %v", respRelay.StatusCode)
 	defer respRelay.Body.Close()
-	if respRelay.StatusCode != 200 {
-		resp.Code = 100
-		SendMsg(c, resp)
-		return
-	}
-
 	if err != nil {
 		log.Errorf("requset error %v", err)
 		resp.Code = 100
 		SendMsg(c, resp)
 		return
 	}
+	log.Infof("respRelay StatusCode: %v", respRelay.StatusCode)
+	if respRelay.StatusCode != 200 {
+		resp.Code = 100
+		SendMsg(c, resp)
+		return
+	}
+
 	data, err := ioutil.ReadAll(respRelay.Body)
 	resp.BodyBuffer = data
 	if err != nil {
@@ -116,7 +116,12 @@ func (s *HttpServer) relayRequset(c *gin.Context) {
 
 func SendMsg(c *pb.Context, msg proto.Message) {
 	err := xcontext.Execute(c.Context, func(ctx context.Context) error {
-		return c.Writer.WriteMsg(msg)
+		log.Infof("msg:%v", msg)
+		err := c.Writer.WriteMsg(msg)
+		if err != nil {
+			log.Errorf("SendMsg Error:%v", err.Error())
+		}
+		return err
 	}, xcontext.WithTimeout(time.Second*10))
 	if err != nil {
 		log.Errorw("failed to send message:", "err", err, "to", c.Stream.Conn().RemotePeer().String())

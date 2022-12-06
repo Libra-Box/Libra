@@ -16,8 +16,6 @@ import (
 var lock sync.Mutex
 
 func (s *HttpServer) GetBoxAddress_http(c *gin.Context) {
-	lock.Lock()
-	defer lock.Unlock()
 	protoc := protocol.ID(c.Request.Header.Get("PROTOCOL"))
 	peerId := c.Request.Header.Get("PEER_ID")
 	resp := &pb.PeerAddressResp{
