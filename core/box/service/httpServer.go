@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	logging "github.com/ipfs/go-log/v2"
 	coreiface "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/ipfs/kubo/config"
@@ -30,7 +30,7 @@ type HttpServer struct {
 	httpHost     string
 	p2pHost      host.Host
 	coreApi      coreiface.CoreAPI
-	messenger    pb.Messenger
+	messenger    *pb.BoxMessenger
 	store        *ds.DbStore
 	SignKey      string
 	JwtKey       string

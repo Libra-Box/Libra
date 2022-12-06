@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"github.com/ipfs/go-cid"
 	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipfs/interface-go-ipfs-core/options"
@@ -13,7 +13,7 @@ import (
 	"github.com/ipfs/kubo/core/box/pb"
 	"github.com/ipfs/kubo/pkg/xfile"
 	"github.com/jinzhu/gorm"
-	"github.com/libp2p/go-libp2p-core/protocol"
+	"github.com/libp2p/go-libp2p/core/protocol"
 	"io"
 	"io/ioutil"
 	"os"
@@ -150,7 +150,7 @@ func (s *HttpServer) UploadFile_http(c *gin.Context) {
 		req.Id = genUUidString()
 	}
 	u := s.ctx.Value("user").(UserData)
-	if req.Size_ < req.BytesFrom+int64(len(req.Data)) {
+	if req.Size < req.BytesFrom+int64(len(req.Data)) {
 		log.Errorf("file size error: %+v", req)
 		resp.Code = pb.Code_RequestParamError
 
@@ -164,7 +164,7 @@ func (s *HttpServer) UploadFile_http(c *gin.Context) {
 		respondProto(c, resp)
 		return
 	}
-	if uint64(req.Size_) > user.AllocatedSpace-user.UsedSpace {
+	if uint64(req.Size) > user.AllocatedSpace-user.UsedSpace {
 		log.Errorf("no enough space: %v", user.AllocatedSpace-user.UsedSpace)
 		resp.Code = pb.Code_NoEnoughSpace
 		respondProto(c, resp)
@@ -193,7 +193,7 @@ func (s *HttpServer) UploadFile_http(c *gin.Context) {
 		ParentId:   req.ParentId,
 		Name:       req.Name,
 		Ext:        xfile.Ext(req.Name),
-		Size:       int(req.Size_),
+		Size:       int(req.Size),
 		CreatedAt:  time.Now().Unix(),
 		UpdateAt:   time.Now().Unix(),
 		FormDevice: FormDevice,
@@ -287,7 +287,7 @@ func (s *HttpServer) UploadFile_http(c *gin.Context) {
 		return
 	}
 
-	if req.Size_ > req.BytesFrom+int64(len(req.Data)) {
+	if req.Size > req.BytesFrom+int64(len(req.Data)) {
 		respondProto(c, resp)
 		return
 	}
@@ -313,7 +313,7 @@ func (s *HttpServer) UploadFile_http(c *gin.Context) {
 			return
 		}
 	}
-	user.UsedSpace += uint64(req.Size_)
+	user.UsedSpace += uint64(req.Size)
 	err = s.store.UpdateUserSpace(user)
 	if err != nil {
 		log.Errorf("failed to update user: %v", err)
@@ -706,7 +706,7 @@ func (s *HttpServer) GetFileList_http(c *gin.Context) {
 		resp.Files[i] = &pb.FileItem{
 			Id:         v.Id,
 			Name:       v.Name,
-			Size_:      int64(v.Size),
+			Size:       int64(v.Size),
 			Md5:        v.Md5,
 			IsFolder:   v.IsFolder,
 			CreatedAt:  v.CreatedAt,
@@ -1060,7 +1060,7 @@ func (s *HttpServer) FileRecord_http(c *gin.Context) {
 		return
 	}
 	FormDevice = parent.FormDevice
-	if uint64(req.Size_) > user.AllocatedSpace-user.UsedSpace {
+	if uint64(req.Size) > user.AllocatedSpace-user.UsedSpace {
 		log.Errorf("no enough space: %v", user.AllocatedSpace-user.UsedSpace)
 		resp.Code = pb.Code_NoEnoughSpace
 		respondProto(c, resp)
@@ -1073,7 +1073,7 @@ func (s *HttpServer) FileRecord_http(c *gin.Context) {
 		Name:       req.Name,
 		Cid:        req.Cid,
 		Md5:        req.Md5,
-		Size:       int(req.Size_),
+		Size:       int(req.Size),
 		Ext:        xfile.Ext(req.Name),
 		CreatedAt:  time.Now().Unix(),
 		UpdateAt:   time.Now().Unix(),
@@ -1733,7 +1733,7 @@ func (s *HttpServer) GetShareList_http(c *gin.Context) {
 			Name:      v.Name,
 			IsFolder:  v.IsFolder,
 			FileType:  v.Ext,
-			Size_:     int64(v.Size),
+			Size:      int64(v.Size),
 			CreatedAt: v.CreatedAt,
 			EndAt:     v.EndAt,
 			UserName:  req.UserName,
@@ -1806,7 +1806,7 @@ func (s *HttpServer) GetFileTree_http(c *gin.Context) {
 			Uuid:     v.Id,
 			Name:     v.Name,
 			Ext:      v.Ext,
-			Size_:    int64(v.Size),
+			Size:     int64(v.Size),
 			ParentId: v.ParentId,
 			IsFolder: v.IsFolder,
 			Paths:    v.Paths,
@@ -1866,7 +1866,7 @@ func (s *HttpServer) GetFileBackupList_http(c *gin.Context) {
 			Uuid:      v.Id,
 			Name:      v.Name,
 			Ext:       v.Ext,
-			Size_:     int64(v.Size),
+			Size:      int64(v.Size),
 			ParentId:  v.ParentId,
 			IsFolder:  v.IsFolder,
 			Md5:       v.Md5,

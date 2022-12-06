@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 	"github.com/ipfs/kubo/core/box/model"
@@ -64,7 +64,7 @@ func (s *HttpServer) RecycleList_http(c *gin.Context) {
 			FileId:    v.FileId,
 			Name:      v.Name,
 			IsFolder:  v.IsFolder,
-			Size_:     int64(v.Size),
+			Size:      int64(v.Size),
 			CreatedAt: v.CreatedAt,
 			Ext:       v.Ext,
 		})

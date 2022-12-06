@@ -3,7 +3,7 @@ package pb
 import (
 	"context"
 	"fmt"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	logging "github.com/ipfs/go-log"
 	"github.com/libp2p/go-libp2p/core/host"
 	"github.com/libp2p/go-libp2p/core/network"
@@ -172,5 +172,3 @@ func (m *BoxMessenger) handleNewMessage(s network.Stream, msgHandlers HandlersCh
 func (m *BoxMessenger) GetNonce() uint32 {
 	return atomic.AddUint32(&m.msgNonce, 1)
 }
-
-var _ Messenger = &BoxMessenger{}

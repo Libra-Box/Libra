@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	ipfs "github.com/ipfs/kubo"
 	"github.com/ipfs/kubo/core/box/pb"
 	"github.com/klauspost/cpuid/v2"

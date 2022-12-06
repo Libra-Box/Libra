@@ -3,7 +3,7 @@ package service
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"github.com/ipfs/kubo/core/box/model"
 	"github.com/ipfs/kubo/core/box/pb"
 	"github.com/jinzhu/gorm"

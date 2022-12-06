@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"github.com/ipfs/kubo/config"
 	"github.com/ipfs/kubo/core/box/pb"
 	requestProtobuf "github.com/ipfs/kubo/core/box/request"

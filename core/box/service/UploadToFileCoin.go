@@ -3,6 +3,7 @@ package service
 import (
 	"bytes"
 	"context"
+	"github.com/golang/protobuf/proto"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 	"github.com/ipfs/kubo/core/box/model"
@@ -154,13 +155,13 @@ func (s *HttpServer) uploadToFileCoin(c context.Context) {
 										PeerId:    s.p2pHost.ID().String(),
 									}
 
-									pData, err := fileToFileCoin.Marshal()
+									pData, err := proto.Marshal(fileToFileCoin)
 									if err != nil {
 										log.Errorf("failed to fileToFileCoin: %v", err)
 										continue
 									}
 									dataString := s.protoHttp(v.MinerUrl, pData, "/lotus/filecoinBackup")
-									err = resp.Unmarshal(dataString)
+									err = proto.Unmarshal(dataString, resp)
 									if err != nil {
 										log.Errorf("failed to resp.Unmarshal: %v", err)
 										continue

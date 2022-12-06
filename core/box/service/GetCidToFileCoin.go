@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipfs/interface-go-ipfs-core/options"
 	"github.com/ipfs/kubo/core/box/model"
@@ -76,13 +77,13 @@ func (s *HttpServer) getCidToFileCoin(c context.Context) {
 							IpfsCid: v.IpfsCid,
 						}
 
-						pData, err := fileStatus.Marshal()
+						pData, err := proto.Marshal(fileStatus)
 						if err != nil {
 							log.Errorf("failed to fileStatus: %v", err)
 							continue
 						}
 						dataString := s.protoHttp(v.MinerUrl, pData, "/lotus/getBackUpStatus")
-						err = resp.Unmarshal(dataString)
+						err = proto.Unmarshal(dataString, resp)
 						if err != nil {
 							log.Errorf("failed to resp.Unmarshal: %v", err)
 							continue

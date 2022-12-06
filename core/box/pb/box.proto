@@ -1,8 +1,9 @@
 syntax = "proto3";
-
-option go_package = "pb";
+package pb;
+option go_package = "../pb";
 
 // protoc --gofast_out=. --proto_path=. *.proto
+// protoc --go_out=. --proto_path=. *.proto
 // protoc --js_out=import_style=commonjs,binary:. *.proto
 // relay 代理传输
 // "/box/relay/1.0.0"
