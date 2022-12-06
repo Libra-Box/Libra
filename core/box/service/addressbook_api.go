@@ -1,12 +1,11 @@
 package service
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gogo/protobuf/proto"
 	"github.com/ipfs/kubo/core/box/model"
 	"github.com/ipfs/kubo/core/box/pb"
-	"github.com/libp2p/go-libp2p-core/protocol"
+	"github.com/libp2p/go-libp2p/core/protocol"
 	"io/ioutil"
 	"net"
 	"strings"
@@ -44,7 +43,9 @@ func (s *HttpServer) GetBoxAddress_http(c *gin.Context) {
 	log.Infof("PEER_ID: %v", peerId)
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
-		fmt.Println(err)
+		log.Errorf(" request error : %v", err)
+		resp.Code = pb.Code_RequestParamError
+		respondProto(c, resp)
 		return
 	}
 	for _, address := range addrs {

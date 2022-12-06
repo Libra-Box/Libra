@@ -111,8 +111,8 @@ func (Code) EnumDescriptor() ([]byte, []int) {
 // "/box/relay/1.0.0"
 // "http://122.9.61.5:9988/v1/box/relay/1.0.0"
 type RelayReq struct {
-	ProtocolId           string   `protobuf:"bytes,1,opt,name=ProtocolId,proto3" json:"ProtocolId"`
-	BodyBuffer           []byte   `protobuf:"bytes,2,opt,name=BodyBuffer,proto3" json:"BodyBuffer"`
+	ProtocolId           string   `protobuf:"bytes,1,opt,name=ProtocolId,proto3" json:"ProtocolId,omitempty"`
+	BodyBuffer           []byte   `protobuf:"bytes,2,opt,name=BodyBuffer,proto3" json:"BodyBuffer,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -166,9 +166,9 @@ func (m *RelayReq) GetBodyBuffer() []byte {
 }
 
 type RelayResp struct {
-	ProtocolId           string   `protobuf:"bytes,1,opt,name=ProtocolId,proto3" json:"ProtocolId"`
-	BodyBuffer           []byte   `protobuf:"bytes,2,opt,name=BodyBuffer,proto3" json:"BodyBuffer"`
-	Code                 uint32   `protobuf:"varint,3,opt,name=code,proto3" json:"code"`
+	ProtocolId           string   `protobuf:"bytes,1,opt,name=ProtocolId,proto3" json:"ProtocolId,omitempty"`
+	BodyBuffer           []byte   `protobuf:"bytes,2,opt,name=BodyBuffer,proto3" json:"BodyBuffer,omitempty"`
+	Code                 uint32   `protobuf:"varint,3,opt,name=code,proto3" json:"code,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -229,9 +229,9 @@ func (m *RelayResp) GetCode() uint32 {
 }
 
 type CommonResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -293,7 +293,7 @@ func (m *CommonResp) GetMsg() string {
 
 // "/box/ping/1.0.0"
 type PingReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -340,7 +340,7 @@ func (m *PingReq) GetNonce() uint32 {
 }
 
 type PingResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -391,8 +391,8 @@ func (m *PingResp) GetNonce() uint32 {
 // "/box/peer_address/1.0.0"
 // Http Post Json : http://122.9.61.5:16516/v1/peer_addr
 type PeerAddressReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -446,10 +446,10 @@ func (m *PeerAddressReq) GetPeerId() string {
 }
 
 type PeerAddressResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	PeerAddress          []string `protobuf:"bytes,3,rep,name=peerAddress,proto3" json:"peerAddress"`
-	Msg                  string   `protobuf:"bytes,4,opt,name=msg,proto3" json:"msg"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	PeerAddress          []string `protobuf:"bytes,3,rep,name=peerAddress,proto3" json:"peerAddress,omitempty"`
+	Msg                  string   `protobuf:"bytes,4,opt,name=msg,proto3" json:"msg,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -519,16 +519,16 @@ func (m *PeerAddressResp) GetMsg() string {
 ////////////////////////////////////////////////////////////////////////
 // 用户数据
 type User struct {
-	Id                   uint32   `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	Role                 int32    `protobuf:"varint,3,opt,name=role,proto3" json:"role"`
-	AllocatedSpace       uint64   `protobuf:"varint,4,opt,name=allocatedSpace,proto3" json:"allocatedSpace"`
-	UsedSpace            uint64   `protobuf:"varint,5,opt,name=usedSpace,proto3" json:"usedSpace"`
-	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
-	DeviceName           string   `protobuf:"bytes,7,opt,name=deviceName,proto3" json:"deviceName"`
-	CreatedAt            int64    `protobuf:"varint,8,opt,name=createdAt,proto3" json:"createdAt"`
-	Password             string   `protobuf:"bytes,9,opt,name=password,proto3" json:"password"`
-	SyncFil              int32    `protobuf:"varint,10,opt,name=syncFil,proto3" json:"syncFil"`
+	Id                   uint32   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Role                 int32    `protobuf:"varint,3,opt,name=role,proto3" json:"role,omitempty"`
+	AllocatedSpace       uint64   `protobuf:"varint,4,opt,name=allocatedSpace,proto3" json:"allocatedSpace,omitempty"`
+	UsedSpace            uint64   `protobuf:"varint,5,opt,name=usedSpace,proto3" json:"usedSpace,omitempty"`
+	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	DeviceName           string   `protobuf:"bytes,7,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,8,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	Password             string   `protobuf:"bytes,9,opt,name=password,proto3" json:"password,omitempty"`
+	SyncFil              int32    `protobuf:"varint,10,opt,name=syncFil,proto3" json:"syncFil,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -640,9 +640,9 @@ func (m *User) GetSyncFil() int32 {
 ////////////////////////////////////////////////////////////////////////
 // 磁盘空间
 type DiskSpace struct {
-	Total                uint64   `protobuf:"varint,1,opt,name=total,proto3" json:"total"`
-	AdminUsed            uint64   `protobuf:"varint,2,opt,name=adminUsed,proto3" json:"adminUsed"`
-	OtherAllocated       uint64   `protobuf:"varint,3,opt,name=otherAllocated,proto3" json:"otherAllocated"`
+	Total                uint64   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	AdminUsed            uint64   `protobuf:"varint,2,opt,name=adminUsed,proto3" json:"adminUsed,omitempty"`
+	OtherAllocated       uint64   `protobuf:"varint,3,opt,name=otherAllocated,proto3" json:"otherAllocated,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -706,8 +706,8 @@ func (m *DiskSpace) GetOtherAllocated() uint64 {
 //  获取设备状态
 // "/box/device/state/1.0.0"
 type DeviceStateReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -761,11 +761,11 @@ func (m *DeviceStateReq) GetPeerId() string {
 }
 
 type DeviceStateResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	State                int32    `protobuf:"varint,3,opt,name=state,proto3" json:"state"`
-	AdminName            string   `protobuf:"bytes,4,opt,name=adminName,proto3" json:"adminName"`
-	AdminAvatar          []byte   `protobuf:"bytes,5,opt,name=adminAvatar,proto3" json:"adminAvatar"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	State                int32    `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
+	AdminName            string   `protobuf:"bytes,4,opt,name=adminName,proto3" json:"adminName,omitempty"`
+	AdminAvatar          []byte   `protobuf:"bytes,5,opt,name=adminAvatar,proto3" json:"adminAvatar,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -843,13 +843,13 @@ func (m *DeviceStateResp) GetAdminAvatar() []byte {
 //  激活设备
 // "/box/activate/1.0.0"
 type ActivateReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
-	RandNonce            string   `protobuf:"bytes,5,opt,name=randNonce,proto3" json:"randNonce"`
-	Signature            string   `protobuf:"bytes,6,opt,name=signature,proto3" json:"signature"`
-	DeviceName           string   `protobuf:"bytes,7,opt,name=deviceName,proto3" json:"deviceName"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
+	RandNonce            string   `protobuf:"bytes,5,opt,name=randNonce,proto3" json:"randNonce,omitempty"`
+	Signature            string   `protobuf:"bytes,6,opt,name=signature,proto3" json:"signature,omitempty"`
+	DeviceName           string   `protobuf:"bytes,7,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -938,11 +938,11 @@ func (m *ActivateReq) GetDeviceName() string {
 }
 
 type ActivateResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token"`
-	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
+	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1019,10 +1019,10 @@ func (m *ActivateResp) GetUserInfo() *User {
 //  忘记密码
 // "/box/forget_pass/1.0.0"
 type ForgetPassReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId"`
-	Signature            string   `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature"`
-	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId,omitempty"`
+	Signature            string   `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
+	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1090,11 +1090,11 @@ func (m *ForgetPassReq) GetName() string {
 }
 
 type ForgetPassResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token"`
-	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
+	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1172,11 +1172,11 @@ func (m *ForgetPassResp) GetUserInfo() *User {
 // 登录
 // "/box/login/1.0.0"
 type LoginReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
-	DeviceName           string   `protobuf:"bytes,5,opt,name=deviceName,proto3" json:"deviceName"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peerId,proto3" json:"peerId,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
+	DeviceName           string   `protobuf:"bytes,5,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1251,11 +1251,11 @@ func (m *LoginReq) GetDeviceName() string {
 }
 
 type LoginResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token"`
-	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
+	UserInfo             *User    `protobuf:"bytes,5,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1333,11 +1333,11 @@ func (m *LoginResp) GetUserInfo() *User {
 // 添加用户
 // "/box/user/add/1.0.0"
 type AddUserReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password"`
-	Space                uint64   `protobuf:"varint,5,opt,name=space,proto3" json:"space"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
+	Space                uint64   `protobuf:"varint,5,opt,name=space,proto3" json:"space,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1415,8 +1415,8 @@ func (m *AddUserReq) GetSpace() uint64 {
 // 获取用户信息
 // "/box/user/info/1.0.0"
 type UserInfoReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1470,11 +1470,11 @@ func (m *UserInfoReq) GetToken() string {
 }
 
 type UserInfoResp struct {
-	Nonce                uint32     `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code       `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string     `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	User                 *User      `protobuf:"bytes,4,opt,name=user,proto3" json:"user"`
-	Space                *DiskSpace `protobuf:"bytes,5,opt,name=space,proto3" json:"space"`
+	Nonce                uint32     `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code       `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string     `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	User                 *User      `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`
+	Space                *DiskSpace `protobuf:"bytes,5,opt,name=space,proto3" json:"space,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
 	XXX_unrecognized     []byte     `json:"-"`
 	XXX_sizecache        int32      `json:"-"`
@@ -1552,8 +1552,8 @@ func (m *UserInfoResp) GetSpace() *DiskSpace {
 // 获取用户列表
 // "/box/user/list/1.0.0"
 type UserListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1607,10 +1607,10 @@ func (m *UserListReq) GetToken() string {
 }
 
 type UserListResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	User                 []*User  `protobuf:"bytes,4,rep,name=user,proto3" json:"user"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	User                 []*User  `protobuf:"bytes,4,rep,name=user,proto3" json:"user,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1681,10 +1681,10 @@ func (m *UserListResp) GetUser() []*User {
 // 修改自己的密码
 // "/box/user/update_pass/1.0.0"
 type UpdatePasswordReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	OldPass              string   `protobuf:"bytes,3,opt,name=oldPass,proto3" json:"oldPass"`
-	NewPass              string   `protobuf:"bytes,4,opt,name=newPass,proto3" json:"newPass"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	OldPass              string   `protobuf:"bytes,3,opt,name=oldPass,proto3" json:"oldPass,omitempty"`
+	NewPass              string   `protobuf:"bytes,4,opt,name=newPass,proto3" json:"newPass,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1755,9 +1755,9 @@ func (m *UpdatePasswordReq) GetNewPass() string {
 // 修改自己的昵称
 // "/box/user/rename/1.0.0"
 type UserRenameReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1821,9 +1821,9 @@ func (m *UserRenameReq) GetName() string {
 // 获取用户头像
 // "/box/user/avatar/get/1.0.0"
 type GetUserAvatarReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               int32    `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               int32    `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1884,10 +1884,10 @@ func (m *GetUserAvatarReq) GetUserId() int32 {
 }
 
 type GetUserAvatarResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	AvatarData           []byte   `protobuf:"bytes,4,opt,name=avatarData,proto3" json:"avatarData"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	AvatarData           []byte   `protobuf:"bytes,4,opt,name=avatarData,proto3" json:"avatarData,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1958,9 +1958,9 @@ func (m *GetUserAvatarResp) GetAvatarData() []byte {
 // 更新用户头像
 // "/box/user/avatar/update/1.0.0"
 type UpdateUserAvatarReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	AvatarData           []byte   `protobuf:"bytes,3,opt,name=avatarData,proto3" json:"avatarData"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	AvatarData           []byte   `protobuf:"bytes,3,opt,name=avatarData,proto3" json:"avatarData,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2024,10 +2024,10 @@ func (m *UpdateUserAvatarReq) GetAvatarData() []byte {
 // 管理员重置他人的密码
 // "/box/user/reset_pass/1.0.0"
 type ResetPasswordReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
-	NewPass              string   `protobuf:"bytes,4,opt,name=newPass,proto3" json:"newPass"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	NewPass              string   `protobuf:"bytes,4,opt,name=newPass,proto3" json:"newPass,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2098,10 +2098,10 @@ func (m *ResetPasswordReq) GetNewPass() string {
 // 管理员禁用/启用子账号
 // "/box/user/enable/1.0.0"
 type EnableUserReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
-	Enable               bool     `protobuf:"varint,4,opt,name=enable,proto3" json:"enable"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	Enable               bool     `protobuf:"varint,4,opt,name=enable,proto3" json:"enable,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2172,9 +2172,9 @@ func (m *EnableUserReq) GetEnable() bool {
 // 管理员删除子账号
 // "/box/user/delete/1.0.0"
 type DeleteUserReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2238,10 +2238,10 @@ func (m *DeleteUserReq) GetUserId() uint32 {
 // 管理员调整子账号空间
 // "/box/user/change_space/1.0.0"
 type ChangeSpaceReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
-	Space                uint64   `protobuf:"varint,4,opt,name=space,proto3" json:"space"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	Space                uint64   `protobuf:"varint,4,opt,name=space,proto3" json:"space,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2313,10 +2313,10 @@ func (m *ChangeSpaceReq) GetSpace() uint64 {
 // "/box/qrcode/scan/1.0.0"
 // Http Post Json : http://122.9.61.5:16516/v1/scan_qrcode
 type ScanQrcodeReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Qrcode               string   `protobuf:"bytes,2,opt,name=qrcode,proto3" json:"qrcode"`
-	PeerId               string   `protobuf:"bytes,3,opt,name=peerId,proto3" json:"peerId"`
-	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Qrcode               string   `protobuf:"bytes,2,opt,name=qrcode,proto3" json:"qrcode,omitempty"`
+	PeerId               string   `protobuf:"bytes,3,opt,name=peerId,proto3" json:"peerId,omitempty"`
+	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2388,8 +2388,8 @@ func (m *ScanQrcodeReq) GetToken() string {
 // "/box/qrcode/get_token/1.0.0"
 // Http Post Json : http://122.9.61.5:16516/v1/qrcode_token
 type GetTokenByQrcodeReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Qrcode               string   `protobuf:"bytes,2,opt,name=qrcode,proto3" json:"qrcode"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Qrcode               string   `protobuf:"bytes,2,opt,name=qrcode,proto3" json:"qrcode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2443,11 +2443,11 @@ func (m *GetTokenByQrcodeReq) GetQrcode() string {
 }
 
 type GetTokenByQrcodeResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token"`
-	PeerId               string   `protobuf:"bytes,5,opt,name=peerId,proto3" json:"peerId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Token                string   `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
+	PeerId               string   `protobuf:"bytes,5,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2522,26 +2522,26 @@ func (m *GetTokenByQrcodeResp) GetPeerId() string {
 }
 
 type FileItem struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	Size_                int64    `protobuf:"varint,3,opt,name=size,proto3" json:"size"`
-	IsFolder             bool     `protobuf:"varint,4,opt,name=isFolder,proto3" json:"isFolder"`
-	CreatedAt            int64    `protobuf:"varint,5,opt,name=createdAt,proto3" json:"createdAt"`
-	UpdatedAt            int64    `protobuf:"varint,6,opt,name=updatedAt,proto3" json:"updatedAt"`
-	Md5                  string   `protobuf:"bytes,7,opt,name=md5,proto3" json:"md5"`
-	Star                 bool     `protobuf:"varint,8,opt,name=star,proto3" json:"star"`
-	Share                bool     `protobuf:"varint,9,opt,name=share,proto3" json:"share"`
-	SubFiles             int32    `protobuf:"varint,10,opt,name=subFiles,proto3" json:"subFiles"`
-	Kind                 string   `protobuf:"bytes,11,opt,name=kind,proto3" json:"kind"`
-	ShareCount           int32    `protobuf:"varint,12,opt,name=shareCount,proto3" json:"shareCount"`
-	Ext                  string   `protobuf:"bytes,13,opt,name=ext,proto3" json:"ext"`
-	ParentId             string   `protobuf:"bytes,14,opt,name=parentId,proto3" json:"parentId"`
-	ParentName           string   `protobuf:"bytes,15,opt,name=parentName,proto3" json:"parentName"`
-	IsSystem             int32    `protobuf:"varint,16,opt,name=isSystem,proto3" json:"isSystem"`
-	Cid                  string   `protobuf:"bytes,17,opt,name=cid,proto3" json:"cid"`
-	FormDevice           string   `protobuf:"bytes,18,opt,name=formDevice,proto3" json:"formDevice"`
-	StartAt              int64    `protobuf:"varint,19,opt,name=startAt,proto3" json:"startAt"`
-	EndAt                int64    `protobuf:"varint,20,opt,name=endAt,proto3" json:"endAt"`
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Size_                int64    `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	IsFolder             bool     `protobuf:"varint,4,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,5,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	UpdatedAt            int64    `protobuf:"varint,6,opt,name=updatedAt,proto3" json:"updatedAt,omitempty"`
+	Md5                  string   `protobuf:"bytes,7,opt,name=md5,proto3" json:"md5,omitempty"`
+	Star                 bool     `protobuf:"varint,8,opt,name=star,proto3" json:"star,omitempty"`
+	Share                bool     `protobuf:"varint,9,opt,name=share,proto3" json:"share,omitempty"`
+	SubFiles             int32    `protobuf:"varint,10,opt,name=subFiles,proto3" json:"subFiles,omitempty"`
+	Kind                 string   `protobuf:"bytes,11,opt,name=kind,proto3" json:"kind,omitempty"`
+	ShareCount           int32    `protobuf:"varint,12,opt,name=shareCount,proto3" json:"shareCount,omitempty"`
+	Ext                  string   `protobuf:"bytes,13,opt,name=ext,proto3" json:"ext,omitempty"`
+	ParentId             string   `protobuf:"bytes,14,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	ParentName           string   `protobuf:"bytes,15,opt,name=parentName,proto3" json:"parentName,omitempty"`
+	IsSystem             int32    `protobuf:"varint,16,opt,name=isSystem,proto3" json:"isSystem,omitempty"`
+	Cid                  string   `protobuf:"bytes,17,opt,name=cid,proto3" json:"cid,omitempty"`
+	FormDevice           string   `protobuf:"bytes,18,opt,name=formDevice,proto3" json:"formDevice,omitempty"`
+	StartAt              int64    `protobuf:"varint,19,opt,name=startAt,proto3" json:"startAt,omitempty"`
+	EndAt                int64    `protobuf:"varint,20,opt,name=endAt,proto3" json:"endAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2724,13 +2724,13 @@ func (m *FileItem) GetEndAt() int64 {
 // 新建文件夹
 // "/box/file/new_folder/1.0.0"
 type NewFolderReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id"`
-	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
-	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId"`
-	IsSystem             int32    `protobuf:"varint,6,opt,name=isSystem,proto3" json:"isSystem"`
-	FormDevice           string   `protobuf:"bytes,7,opt,name=formDevice,proto3" json:"formDevice"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	IsSystem             int32    `protobuf:"varint,6,opt,name=isSystem,proto3" json:"isSystem,omitempty"`
+	FormDevice           string   `protobuf:"bytes,7,opt,name=formDevice,proto3" json:"formDevice,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2819,9 +2819,9 @@ func (m *NewFolderReq) GetFormDevice() string {
 }
 
 type NewFolderResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2885,15 +2885,15 @@ func (m *NewFolderResp) GetId() string {
 // 文件上传
 // "/box/file/upload/1.0.0"
 type UploadFileReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id"`
-	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId"`
-	Size_                int64    `protobuf:"varint,6,opt,name=size,proto3" json:"size"`
-	BytesFrom            int64    `protobuf:"varint,7,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from"`
-	Data                 []byte   `protobuf:"bytes,8,opt,name=data,proto3" json:"data"`
-	Md5                  string   `protobuf:"bytes,9,opt,name=md5,proto3" json:"md5"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	Size_                int64    `protobuf:"varint,6,opt,name=size,proto3" json:"size,omitempty"`
+	BytesFrom            int64    `protobuf:"varint,7,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from,omitempty"`
+	Data                 []byte   `protobuf:"bytes,8,opt,name=data,proto3" json:"data,omitempty"`
+	Md5                  string   `protobuf:"bytes,9,opt,name=md5,proto3" json:"md5,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -2999,12 +2999,12 @@ func (m *UploadFileReq) GetMd5() string {
 // 文件下载
 // "/box/file/download/1.0.0"
 type DownloadFileReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId"`
-	BytesFrom            int64    `protobuf:"varint,4,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from"`
-	BytesCount           int64    `protobuf:"varint,5,opt,name=bytes_count,json=bytesCount,proto3" json:"bytes_count"`
-	UserId               int32    `protobuf:"varint,6,opt,name=userId,proto3" json:"userId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	BytesFrom            int64    `protobuf:"varint,4,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from,omitempty"`
+	BytesCount           int64    `protobuf:"varint,5,opt,name=bytes_count,json=bytesCount,proto3" json:"bytes_count,omitempty"`
+	UserId               int32    `protobuf:"varint,6,opt,name=userId,proto3" json:"userId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3086,12 +3086,12 @@ func (m *DownloadFileReq) GetUserId() int32 {
 }
 
 type DownloadFileResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
-	FileSize             int64    `protobuf:"varint,5,opt,name=fileSize,proto3" json:"fileSize"`
-	Data                 []byte   `protobuf:"bytes,6,opt,name=data,proto3" json:"data"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	FileSize             int64    `protobuf:"varint,5,opt,name=fileSize,proto3" json:"fileSize,omitempty"`
+	Data                 []byte   `protobuf:"bytes,6,opt,name=data,proto3" json:"data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3176,17 +3176,17 @@ func (m *DownloadFileResp) GetData() []byte {
 // 文件（夹）列表
 // "/box/file/list/1.0.0"
 type FileListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	ParentId             string   `protobuf:"bytes,3,opt,name=parentId,proto3" json:"parentId"`
-	DirMask              int32    `protobuf:"varint,4,opt,name=dirMask,proto3" json:"dirMask"`
-	FileType             int32    `protobuf:"varint,5,opt,name=fileType,proto3" json:"fileType"`
-	StarMask             int32    `protobuf:"varint,6,opt,name=starMask,proto3" json:"starMask"`
-	Keyword              string   `protobuf:"bytes,7,opt,name=keyword,proto3" json:"keyword"`
-	Order                int32    `protobuf:"varint,8,opt,name=order,proto3" json:"order"`
-	Offset               int32    `protobuf:"varint,9,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,10,opt,name=limit,proto3" json:"limit"`
-	IsEqual              int32    `protobuf:"varint,11,opt,name=isEqual,proto3" json:"isEqual"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	ParentId             string   `protobuf:"bytes,3,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	DirMask              int32    `protobuf:"varint,4,opt,name=dirMask,proto3" json:"dirMask,omitempty"`
+	FileType             int32    `protobuf:"varint,5,opt,name=fileType,proto3" json:"fileType,omitempty"`
+	StarMask             int32    `protobuf:"varint,6,opt,name=starMask,proto3" json:"starMask,omitempty"`
+	Keyword              string   `protobuf:"bytes,7,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Order                int32    `protobuf:"varint,8,opt,name=order,proto3" json:"order,omitempty"`
+	Offset               int32    `protobuf:"varint,9,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,10,opt,name=limit,proto3" json:"limit,omitempty"`
+	IsEqual              int32    `protobuf:"varint,11,opt,name=isEqual,proto3" json:"isEqual,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3303,11 +3303,11 @@ func (m *FileListReq) GetIsEqual() int32 {
 }
 
 type FileListResp struct {
-	Nonce                uint32      `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code        `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string      `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32       `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Files                []*FileItem `protobuf:"bytes,5,rep,name=files,proto3" json:"files"`
+	Nonce                uint32      `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code        `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string      `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32       `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Files                []*FileItem `protobuf:"bytes,5,rep,name=files,proto3" json:"files,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -3385,11 +3385,11 @@ func (m *FileListResp) GetFiles() []*FileItem {
 // 修改文件(夹)名
 // "/box/file/rename/1.0.0"
 type FileRenameReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId"`
-	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
-	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Name                 string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3467,9 +3467,9 @@ func (m *FileRenameReq) GetParentId() string {
 // 删除文件（夹）
 // "/box/file/delete/1.0.0"
 type FileDeleteReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3533,10 +3533,10 @@ func (m *FileDeleteReq) GetFileIds() []string {
 // 移动文件（夹）
 // "/box/file/move/1.0.0"
 type FileMoveReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId"`
-	NewParentId          string   `protobuf:"bytes,4,opt,name=newParentId,proto3" json:"newParentId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	NewParentId          string   `protobuf:"bytes,4,opt,name=newParentId,proto3" json:"newParentId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3607,13 +3607,13 @@ func (m *FileMoveReq) GetNewParentId() string {
 //  复制文件（夹）
 // "/box/file/copy/1.0.0"
 type FileCopyReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId"`
-	NewParentId          string   `protobuf:"bytes,4,opt,name=newParentId,proto3" json:"newParentId"`
-	NewFileId            string   `protobuf:"bytes,5,opt,name=newFileId,proto3" json:"newFileId"`
-	NewFileName          string   `protobuf:"bytes,6,opt,name=newFileName,proto3" json:"newFileName"`
-	UserId               int32    `protobuf:"varint,7,opt,name=userId,proto3" json:"userId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	NewParentId          string   `protobuf:"bytes,4,opt,name=newParentId,proto3" json:"newParentId,omitempty"`
+	NewFileId            string   `protobuf:"bytes,5,opt,name=newFileId,proto3" json:"newFileId,omitempty"`
+	NewFileName          string   `protobuf:"bytes,6,opt,name=newFileName,proto3" json:"newFileName,omitempty"`
+	UserId               int32    `protobuf:"varint,7,opt,name=userId,proto3" json:"userId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3705,9 +3705,9 @@ func (m *FileCopyReq) GetUserId() int32 {
 // 收藏文件（夹）
 // "/box/file/star/1.0.0"
 type FileStarReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3771,9 +3771,9 @@ func (m *FileStarReq) GetFileIds() []string {
 // 取消收藏文件（夹）
 // "/box/file/unstar/1.0.0"
 type FileUnstarReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3836,13 +3836,13 @@ func (m *FileUnstarReq) GetFileIds() []string {
 ///////////////////////////////////////////////////////////////////////
 // 回收站Item
 type RecycleItem struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Size_                int64    `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
-	IsFolder             bool     `protobuf:"varint,5,opt,name=isFolder,proto3" json:"isFolder"`
-	CreatedAt            int64    `protobuf:"varint,6,opt,name=createdAt,proto3" json:"createdAt"`
-	Ext                  string   `protobuf:"bytes,7,opt,name=ext,proto3" json:"ext"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Size_                int64    `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	IsFolder             bool     `protobuf:"varint,5,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,6,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	Ext                  string   `protobuf:"bytes,7,opt,name=ext,proto3" json:"ext,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -3934,13 +3934,13 @@ func (m *RecycleItem) GetExt() string {
 // 回收站列表
 // "/box/recycle/list/1.0.0"
 type RecycleListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Order                int32    `protobuf:"varint,3,opt,name=order,proto3" json:"order"`
-	Offset               int32    `protobuf:"varint,4,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,5,opt,name=limit,proto3" json:"limit"`
-	Keyword              string   `protobuf:"bytes,7,opt,name=keyword,proto3" json:"keyword"`
-	FileType             int32    `protobuf:"varint,8,opt,name=fileType,proto3" json:"fileType"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Order                int32    `protobuf:"varint,3,opt,name=order,proto3" json:"order,omitempty"`
+	Offset               int32    `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+	Keyword              string   `protobuf:"bytes,7,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	FileType             int32    `protobuf:"varint,8,opt,name=fileType,proto3" json:"fileType,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4029,11 +4029,11 @@ func (m *RecycleListReq) GetFileType() int32 {
 }
 
 type RecycleListResp struct {
-	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*RecycleItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*RecycleItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -4111,9 +4111,9 @@ func (m *RecycleListResp) GetItems() []*RecycleItem {
 // 回收站删除文件（夹）
 // "/box/recycle/delete/1.0.0"
 type RecycleDeleteReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Ids                  []int32  `protobuf:"varint,3,rep,packed,name=ids,proto3" json:"ids"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Ids                  []int32  `protobuf:"varint,3,rep,packed,name=ids,proto3" json:"ids,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4177,9 +4177,9 @@ func (m *RecycleDeleteReq) GetIds() []int32 {
 // 回收站恢复删除文件（夹）
 // "/box/recycle/restore/1.0.0"
 type RecycleRestoreReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Ids                  []int32  `protobuf:"varint,3,rep,packed,name=ids,proto3" json:"ids"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Ids                  []int32  `protobuf:"varint,3,rep,packed,name=ids,proto3" json:"ids,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4243,12 +4243,12 @@ func (m *RecycleRestoreReq) GetIds() []int32 {
 // 共享文件（夹）
 // "/box/file/share/1.0.0"
 type FileShareReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
-	UserIdList           string   `protobuf:"bytes,4,opt,name=userIdList,proto3" json:"userIdList"`
-	StartAt              int64    `protobuf:"varint,5,opt,name=startAt,proto3" json:"startAt"`
-	EndAt                int64    `protobuf:"varint,6,opt,name=endAt,proto3" json:"endAt"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
+	UserIdList           string   `protobuf:"bytes,4,opt,name=userIdList,proto3" json:"userIdList,omitempty"`
+	StartAt              int64    `protobuf:"varint,5,opt,name=startAt,proto3" json:"startAt,omitempty"`
+	EndAt                int64    `protobuf:"varint,6,opt,name=endAt,proto3" json:"endAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4333,9 +4333,9 @@ func (m *FileShareReq) GetEndAt() int64 {
 // 取消共享文件（夹）
 // "/box/file/unshare/1.0.0"
 type FileUnShareReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4398,9 +4398,9 @@ func (m *FileUnShareReq) GetFileIds() []string {
 // 关闭共享文件（夹）
 // "/box/file/close_share/1.0.0"
 type FileCloseShareReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4464,19 +4464,19 @@ func (m *FileCloseShareReq) GetUserId() uint32 {
 // 指定人员的共享文件（夹）列表
 // "/box/file/sharelist/1.0.0"
 type ShareListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
-	UserName             string   `protobuf:"bytes,4,opt,name=userName,proto3" json:"userName"`
-	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId"`
-	DirMask              int32    `protobuf:"varint,6,opt,name=dirMask,proto3" json:"dirMask"`
-	FileType             int32    `protobuf:"varint,7,opt,name=fileType,proto3" json:"fileType"`
-	StarMask             int32    `protobuf:"varint,8,opt,name=starMask,proto3" json:"starMask"`
-	Keyword              string   `protobuf:"bytes,9,opt,name=keyword,proto3" json:"keyword"`
-	Order                int32    `protobuf:"varint,10,opt,name=order,proto3" json:"order"`
-	Offset               int32    `protobuf:"varint,11,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,12,opt,name=limit,proto3" json:"limit"`
-	Ext                  string   `protobuf:"bytes,13,opt,name=ext,proto3" json:"ext"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	UserId               uint32   `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	UserName             string   `protobuf:"bytes,4,opt,name=userName,proto3" json:"userName,omitempty"`
+	ParentId             string   `protobuf:"bytes,5,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	DirMask              int32    `protobuf:"varint,6,opt,name=dirMask,proto3" json:"dirMask,omitempty"`
+	FileType             int32    `protobuf:"varint,7,opt,name=fileType,proto3" json:"fileType,omitempty"`
+	StarMask             int32    `protobuf:"varint,8,opt,name=starMask,proto3" json:"starMask,omitempty"`
+	Keyword              string   `protobuf:"bytes,9,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	Order                int32    `protobuf:"varint,10,opt,name=order,proto3" json:"order,omitempty"`
+	Offset               int32    `protobuf:"varint,11,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,12,opt,name=limit,proto3" json:"limit,omitempty"`
+	Ext                  string   `protobuf:"bytes,13,opt,name=ext,proto3" json:"ext,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4609,23 +4609,23 @@ func (m *ShareListReq) GetExt() string {
 ///////////////////////////////////////////////////////////////////////
 // 共享Item
 type ShareItem struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Size_                int64    `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
-	IsFolder             bool     `protobuf:"varint,5,opt,name=isFolder,proto3" json:"isFolder"`
-	FileType             string   `protobuf:"bytes,6,opt,name=fileType,proto3" json:"fileType"`
-	CreatedAt            int64    `protobuf:"varint,7,opt,name=createdAt,proto3" json:"createdAt"`
-	UserName             string   `protobuf:"bytes,8,opt,name=userName,proto3" json:"userName"`
-	EndAt                int64    `protobuf:"varint,9,opt,name=endAt,proto3" json:"endAt"`
-	CountPeople          int64    `protobuf:"varint,10,opt,name=countPeople,proto3" json:"countPeople"`
-	Ext                  string   `protobuf:"bytes,11,opt,name=ext,proto3" json:"ext"`
-	Share                bool     `protobuf:"varint,12,opt,name=share,proto3" json:"share"`
-	Md5                  string   `protobuf:"bytes,13,opt,name=md5,proto3" json:"md5"`
-	ParentId             string   `protobuf:"bytes,14,opt,name=parentId,proto3" json:"parentId"`
-	SubFiles             int32    `protobuf:"varint,16,opt,name=subFiles,proto3" json:"subFiles"`
-	Cid                  string   `protobuf:"bytes,17,opt,name=cid,proto3" json:"cid"`
-	StartAt              int64    `protobuf:"varint,18,opt,name=startAt,proto3" json:"startAt"`
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Size_                int64    `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	IsFolder             bool     `protobuf:"varint,5,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
+	FileType             string   `protobuf:"bytes,6,opt,name=fileType,proto3" json:"fileType,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,7,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	UserName             string   `protobuf:"bytes,8,opt,name=userName,proto3" json:"userName,omitempty"`
+	EndAt                int64    `protobuf:"varint,9,opt,name=endAt,proto3" json:"endAt,omitempty"`
+	CountPeople          int64    `protobuf:"varint,10,opt,name=countPeople,proto3" json:"countPeople,omitempty"`
+	Ext                  string   `protobuf:"bytes,11,opt,name=ext,proto3" json:"ext,omitempty"`
+	Share                bool     `protobuf:"varint,12,opt,name=share,proto3" json:"share,omitempty"`
+	Md5                  string   `protobuf:"bytes,13,opt,name=md5,proto3" json:"md5,omitempty"`
+	ParentId             string   `protobuf:"bytes,14,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	SubFiles             int32    `protobuf:"varint,16,opt,name=subFiles,proto3" json:"subFiles,omitempty"`
+	Cid                  string   `protobuf:"bytes,17,opt,name=cid,proto3" json:"cid,omitempty"`
+	StartAt              int64    `protobuf:"varint,18,opt,name=startAt,proto3" json:"startAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4784,11 +4784,11 @@ func (m *ShareItem) GetStartAt() int64 {
 }
 
 type ShareListResp struct {
-	Nonce                uint32       `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code         `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string       `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32        `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*ShareItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32       `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code         `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string       `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32        `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*ShareItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
 	XXX_sizecache        int32        `json:"-"`
@@ -4866,9 +4866,9 @@ func (m *ShareListResp) GetItems() []*ShareItem {
 // 统计用户共享文件（夹）
 // "/box/file/usersharelist/1.0.0"
 type UserShareListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Keyword              string   `protobuf:"bytes,3,opt,name=keyword,proto3" json:"keyword"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Keyword              string   `protobuf:"bytes,3,opt,name=keyword,proto3" json:"keyword,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -4931,12 +4931,12 @@ func (m *UserShareListReq) GetKeyword() string {
 ///////////////////////////////////////////////////////////////////////
 // 用户共享Item
 type UserShareItem struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId"`
-	UserId               int32    `protobuf:"varint,3,opt,name=userId,proto3" json:"userId"`
-	UserName             string   `protobuf:"bytes,4,opt,name=userName,proto3" json:"userName"`
-	FolderCount          int64    `protobuf:"varint,5,opt,name=folderCount,proto3" json:"folderCount"`
-	FileCount            int64    `protobuf:"varint,6,opt,name=fileCount,proto3" json:"fileCount"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	FileId               string   `protobuf:"bytes,2,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	UserId               int32    `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	UserName             string   `protobuf:"bytes,4,opt,name=userName,proto3" json:"userName,omitempty"`
+	FolderCount          int64    `protobuf:"varint,5,opt,name=folderCount,proto3" json:"folderCount,omitempty"`
+	FileCount            int64    `protobuf:"varint,6,opt,name=fileCount,proto3" json:"fileCount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5018,11 +5018,11 @@ func (m *UserShareItem) GetFileCount() int64 {
 }
 
 type UserShareListResp struct {
-	Nonce                uint32           `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code             `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string           `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32            `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*UserShareItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32           `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code             `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string           `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32            `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*UserShareItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -5100,12 +5100,12 @@ func (m *UserShareListResp) GetItems() []*UserShareItem {
 // 修改共享文件（夹）
 // "/box/file/edit_share/1.0.0"
 type FileEditShareReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds"`
-	UserIdList           string   `protobuf:"bytes,4,opt,name=userIdList,proto3" json:"userIdList"`
-	StartAt              int64    `protobuf:"varint,5,opt,name=startAt,proto3" json:"startAt"`
-	EndAt                int64    `protobuf:"varint,6,opt,name=endAt,proto3" json:"endAt"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileIds              []string `protobuf:"bytes,3,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
+	UserIdList           string   `protobuf:"bytes,4,opt,name=userIdList,proto3" json:"userIdList,omitempty"`
+	StartAt              int64    `protobuf:"varint,5,opt,name=startAt,proto3" json:"startAt,omitempty"`
+	EndAt                int64    `protobuf:"varint,6,opt,name=endAt,proto3" json:"endAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5190,10 +5190,10 @@ func (m *FileEditShareReq) GetEndAt() int64 {
 // 备份通讯录
 // "/box/addressbook/backup/1.0.0"
 type AddressbookBackupReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName"`
-	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5264,9 +5264,9 @@ func (m *AddressbookBackupReq) GetContent() string {
 // 删除通讯录
 // "/box/addressbook/delete/1.0.0"
 type AddressbookDeleteReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5330,8 +5330,8 @@ func (m *AddressbookDeleteReq) GetId() int32 {
 // 删除所有通讯录
 // "/box/addressbook/delete_all/1.0.0"
 type AddressbookDeleteAllReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5388,10 +5388,10 @@ func (m *AddressbookDeleteAllReq) GetToken() string {
 // 获取通讯录列表
 // "/box/addressbook/list/1.0.0"
 type AddressbookListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5459,10 +5459,10 @@ func (m *AddressbookListReq) GetLimit() int32 {
 }
 
 type Addressbook struct {
-	Id                   uint32   `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	BackupAt             uint64   `protobuf:"varint,2,opt,name=backupAt,proto3" json:"backupAt"`
-	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName"`
-	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content"`
+	Id                   uint32   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	BackupAt             uint64   `protobuf:"varint,2,opt,name=backupAt,proto3" json:"backupAt,omitempty"`
+	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5530,11 +5530,11 @@ func (m *Addressbook) GetContent() string {
 }
 
 type AddressbookListResp struct {
-	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Addressbooks         []*Addressbook `protobuf:"bytes,5,rep,name=addressbooks,proto3" json:"addressbooks"`
+	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Addressbooks         []*Addressbook `protobuf:"bytes,5,rep,name=addressbooks,proto3" json:"addressbooks,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -5611,9 +5611,9 @@ func (m *AddressbookListResp) GetAddressbooks() []*Addressbook {
 // 获取指定通讯录
 // "/box/appoint_address/list/1.0.0"
 type AppointAddressListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5674,11 +5674,11 @@ func (m *AppointAddressListReq) GetId() int32 {
 }
 
 type AppointAddressListResp struct {
-	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Addressbooks         []*Addressbook `protobuf:"bytes,5,rep,name=addressbooks,proto3" json:"addressbooks"`
+	Nonce                uint32         `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code           `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string         `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Addressbooks         []*Addressbook `protobuf:"bytes,5,rep,name=addressbooks,proto3" json:"addressbooks,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -5756,10 +5756,10 @@ func (m *AppointAddressListResp) GetAddressbooks() []*Addressbook {
 // 获取指定文件夹下的数据
 // "/box/file/appointlist/1.0.0"
 type AppointFileListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	ParentId             string   `protobuf:"bytes,3,opt,name=parentId,proto3" json:"parentId"`
-	IsFolder             int32    `protobuf:"varint,4,opt,name=isFolder,proto3" json:"isFolder"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	ParentId             string   `protobuf:"bytes,3,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	IsFolder             int32    `protobuf:"varint,4,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5827,18 +5827,18 @@ func (m *AppointFileListReq) GetIsFolder() int32 {
 }
 
 type AppointFileListItem struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	Uuid                 string   `protobuf:"bytes,2,opt,name=uuid,proto3" json:"uuid"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Ext                  string   `protobuf:"bytes,4,opt,name=ext,proto3" json:"ext"`
-	Size_                int64    `protobuf:"varint,5,opt,name=size,proto3" json:"size"`
-	ParentId             string   `protobuf:"bytes,6,opt,name=parentId,proto3" json:"parentId"`
-	IsFolder             bool     `protobuf:"varint,7,opt,name=isFolder,proto3" json:"isFolder"`
-	Paths                string   `protobuf:"bytes,8,opt,name=paths,proto3" json:"paths"`
-	Md5                  string   `protobuf:"bytes,9,opt,name=md5,proto3" json:"md5"`
-	Children             string   `protobuf:"bytes,10,opt,name=children,proto3" json:"children"`
-	Cid                  string   `protobuf:"bytes,11,opt,name=cid,proto3" json:"cid"`
-	FilePaths            string   `protobuf:"bytes,12,opt,name=filePaths,proto3" json:"filePaths"`
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Uuid                 string   `protobuf:"bytes,2,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Ext                  string   `protobuf:"bytes,4,opt,name=ext,proto3" json:"ext,omitempty"`
+	Size_                int64    `protobuf:"varint,5,opt,name=size,proto3" json:"size,omitempty"`
+	ParentId             string   `protobuf:"bytes,6,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	IsFolder             bool     `protobuf:"varint,7,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
+	Paths                string   `protobuf:"bytes,8,opt,name=paths,proto3" json:"paths,omitempty"`
+	Md5                  string   `protobuf:"bytes,9,opt,name=md5,proto3" json:"md5,omitempty"`
+	Children             string   `protobuf:"bytes,10,opt,name=children,proto3" json:"children,omitempty"`
+	Cid                  string   `protobuf:"bytes,11,opt,name=cid,proto3" json:"cid,omitempty"`
+	FilePaths            string   `protobuf:"bytes,12,opt,name=filePaths,proto3" json:"filePaths,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -5962,11 +5962,11 @@ func (m *AppointFileListItem) GetFilePaths() string {
 }
 
 type AppointFileListResp struct {
-	Nonce                uint32                 `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code                   `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32                  `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*AppointFileListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32                 `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code                   `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32                  `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*AppointFileListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
 	XXX_sizecache        int32                  `json:"-"`
@@ -6043,11 +6043,11 @@ func (m *AppointFileListResp) GetItems() []*AppointFileListItem {
 // 获取指定备份文件夹下的数据
 // "/box/file/backup_list/1.0.0"
 type FileBackupListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FormDevice           string   `protobuf:"bytes,3,opt,name=formDevice,proto3" json:"formDevice"`
-	Offset               int32    `protobuf:"varint,4,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,5,opt,name=limit,proto3" json:"limit"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FormDevice           string   `protobuf:"bytes,3,opt,name=formDevice,proto3" json:"formDevice,omitempty"`
+	Offset               int32    `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6122,11 +6122,11 @@ func (m *FileBackupListReq) GetLimit() int32 {
 }
 
 type FileBackupListResp struct {
-	Nonce                uint32                 `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code                   `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32                  `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*AppointFileListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32                 `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code                   `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32                  `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*AppointFileListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
 	XXX_sizecache        int32                  `json:"-"`
@@ -6204,9 +6204,9 @@ func (m *FileBackupListResp) GetItems() []*AppointFileListItem {
 // 查询文件md5是否存在
 // "/box/file/searchmd5/1.0.0"
 type SearchFileMd5Req struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Md5                  string   `protobuf:"bytes,3,opt,name=md5,proto3" json:"md5"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Md5                  string   `protobuf:"bytes,3,opt,name=md5,proto3" json:"md5,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6267,10 +6267,10 @@ func (m *SearchFileMd5Req) GetMd5() string {
 }
 
 type SearchFileMd5Resp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id"`
-	Cid                  string   `protobuf:"bytes,4,opt,name=cid,proto3" json:"cid"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Cid                  string   `protobuf:"bytes,4,opt,name=cid,proto3" json:"cid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6341,15 +6341,15 @@ func (m *SearchFileMd5Resp) GetCid() string {
 //  添加文件（夹）记录
 // "/box/file/file_record/1.0.0"
 type FileRecordReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId"`
-	ParentId             string   `protobuf:"bytes,4,opt,name=parentId,proto3" json:"parentId"`
-	Name                 string   `protobuf:"bytes,5,opt,name=name,proto3" json:"name"`
-	Cid                  string   `protobuf:"bytes,6,opt,name=cid,proto3" json:"cid"`
-	Md5                  string   `protobuf:"bytes,7,opt,name=md5,proto3" json:"md5"`
-	IsFolder             int32    `protobuf:"varint,8,opt,name=isFolder,proto3" json:"isFolder"`
-	Size_                int64    `protobuf:"varint,9,opt,name=size,proto3" json:"size"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	FileId               string   `protobuf:"bytes,3,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	ParentId             string   `protobuf:"bytes,4,opt,name=parentId,proto3" json:"parentId,omitempty"`
+	Name                 string   `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	Cid                  string   `protobuf:"bytes,6,opt,name=cid,proto3" json:"cid,omitempty"`
+	Md5                  string   `protobuf:"bytes,7,opt,name=md5,proto3" json:"md5,omitempty"`
+	IsFolder             int32    `protobuf:"varint,8,opt,name=isFolder,proto3" json:"isFolder,omitempty"`
+	Size_                int64    `protobuf:"varint,9,opt,name=size,proto3" json:"size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6455,10 +6455,10 @@ func (m *FileRecordReq) GetSize_() int64 {
 // 备份记录
 // "/box/backups/list/1.0.0"
 type BackupsListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6526,10 +6526,10 @@ func (m *BackupsListReq) GetLimit() int32 {
 }
 
 type BackupsListItem struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	DeviceName           string   `protobuf:"bytes,2,opt,name=deviceName,proto3" json:"deviceName"`
-	FileCount            int32    `protobuf:"varint,3,opt,name=fileCount,proto3" json:"fileCount"`
-	CreatedAt            int64    `protobuf:"varint,4,opt,name=createdAt,proto3" json:"createdAt"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	DeviceName           string   `protobuf:"bytes,2,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	FileCount            int32    `protobuf:"varint,3,opt,name=fileCount,proto3" json:"fileCount,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,4,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6597,11 +6597,11 @@ func (m *BackupsListItem) GetCreatedAt() int64 {
 }
 
 type BackupsListResp struct {
-	Nonce                uint32             `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code               `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string             `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32              `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*BackupsListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32             `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code               `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string             `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32              `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*BackupsListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
 	XXX_unrecognized     []byte             `json:"-"`
 	XXX_sizecache        int32              `json:"-"`
@@ -6678,10 +6678,10 @@ func (m *BackupsListResp) GetItems() []*BackupsListItem {
 // 添加备份记录
 // "/box/backups/add/1.0.0"
 type BackupsAddReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName"`
-	FileCount            int32    `protobuf:"varint,4,opt,name=fileCount,proto3" json:"fileCount"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	FileCount            int32    `protobuf:"varint,4,opt,name=fileCount,proto3" json:"fileCount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6752,10 +6752,10 @@ func (m *BackupsAddReq) GetFileCount() int32 {
 // 日志
 // "/box/log/list/1.0.0"
 type FileLogListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Status               int32    `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
-	SearchTime           int32    `protobuf:"varint,4,opt,name=searchTime,proto3" json:"searchTime"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Status               int32    `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
+	SearchTime           int32    `protobuf:"varint,4,opt,name=searchTime,proto3" json:"searchTime,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6823,14 +6823,14 @@ func (m *FileLogListReq) GetSearchTime() int32 {
 }
 
 type FileLogListResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Id                   int32    `protobuf:"varint,4,opt,name=id,proto3" json:"id"`
-	FileId               string   `protobuf:"bytes,5,opt,name=fileId,proto3" json:"fileId"`
-	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
-	IdList               string   `protobuf:"bytes,7,opt,name=idList,proto3" json:"idList"`
-	CreatedAt            int64    `protobuf:"varint,8,opt,name=createdAt,proto3" json:"createdAt"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Id                   int32    `protobuf:"varint,4,opt,name=id,proto3" json:"id,omitempty"`
+	FileId               string   `protobuf:"bytes,5,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	IdList               string   `protobuf:"bytes,7,opt,name=idList,proto3" json:"idList,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,8,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6929,9 +6929,9 @@ func (m *FileLogListResp) GetCreatedAt() int64 {
 // 同步设置
 // "/box/sync/list/1.0.0"
 type SyncListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -6992,12 +6992,12 @@ func (m *SyncListReq) GetDeviceName() string {
 }
 
 type SyncListItem struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	DeviceName           string   `protobuf:"bytes,2,opt,name=deviceName,proto3" json:"deviceName"`
-	DevicePath           string   `protobuf:"bytes,3,opt,name=devicePath,proto3" json:"devicePath"`
-	FileId               string   `protobuf:"bytes,4,opt,name=fileId,proto3" json:"fileId"`
-	Status               int32    `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
-	CreatedAt            int64    `protobuf:"varint,6,opt,name=createdAt,proto3" json:"createdAt"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	DeviceName           string   `protobuf:"bytes,2,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	DevicePath           string   `protobuf:"bytes,3,opt,name=devicePath,proto3" json:"devicePath,omitempty"`
+	FileId               string   `protobuf:"bytes,4,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Status               int32    `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,6,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7079,11 +7079,11 @@ func (m *SyncListItem) GetCreatedAt() int64 {
 }
 
 type SyncListResp struct {
-	Nonce                uint32          `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code            `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string          `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32           `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*SyncListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32          `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code            `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string          `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32           `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*SyncListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -7160,12 +7160,12 @@ func (m *SyncListResp) GetItems() []*SyncListItem {
 // 添加同步设置
 // "/box/sync/add/1.0.0"
 type SyncAddReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName"`
-	DevicePath           string   `protobuf:"bytes,4,opt,name=devicePath,proto3" json:"devicePath"`
-	FileId               string   `protobuf:"bytes,5,opt,name=fileId,proto3" json:"fileId"`
-	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	DeviceName           string   `protobuf:"bytes,3,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	DevicePath           string   `protobuf:"bytes,4,opt,name=devicePath,proto3" json:"devicePath,omitempty"`
+	FileId               string   `protobuf:"bytes,5,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Status               int32    `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7249,13 +7249,13 @@ func (m *SyncAddReq) GetStatus() int32 {
 // 修改同步设置
 // "/box/sync/edit/1.0.0"
 type SyncEditReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id"`
-	DeviceName           string   `protobuf:"bytes,4,opt,name=deviceName,proto3" json:"deviceName"`
-	DevicePath           string   `protobuf:"bytes,5,opt,name=devicePath,proto3" json:"devicePath"`
-	FileId               string   `protobuf:"bytes,6,opt,name=fileId,proto3" json:"fileId"`
-	Status               int32    `protobuf:"varint,7,opt,name=status,proto3" json:"status"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
+	DeviceName           string   `protobuf:"bytes,4,opt,name=deviceName,proto3" json:"deviceName,omitempty"`
+	DevicePath           string   `protobuf:"bytes,5,opt,name=devicePath,proto3" json:"devicePath,omitempty"`
+	FileId               string   `protobuf:"bytes,6,opt,name=fileId,proto3" json:"fileId,omitempty"`
+	Status               int32    `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7347,9 +7347,9 @@ func (m *SyncEditReq) GetStatus() int32 {
 // 删除同步设置
 // "/box/sync/del/1.0.0"
 type SyncDelReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Id                   int32    `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7412,10 +7412,10 @@ func (m *SyncDelReq) GetId() int32 {
 // box升级
 // "/box/update/1.0.0"
 type BoxUpdateReq struct {
-	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token"`
-	Md5                  string   `protobuf:"bytes,2,opt,name=md5,proto3" json:"md5"`
-	Version              string   `protobuf:"bytes,3,opt,name=version,proto3" json:"version"`
-	Url                  string   `protobuf:"bytes,4,opt,name=url,proto3" json:"url"`
+	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Md5                  string   `protobuf:"bytes,2,opt,name=md5,proto3" json:"md5,omitempty"`
+	Version              string   `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Url                  string   `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7483,9 +7483,9 @@ func (m *BoxUpdateReq) GetUrl() string {
 }
 
 type BoxUpdateResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	Status               int32    `protobuf:"varint,2,opt,name=status,proto3" json:"status"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Status               int32    `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7548,7 +7548,7 @@ func (m *BoxUpdateResp) GetMsg() string {
 // 获取box参数
 // "/box/deviceInfo/1.0.0"
 type DeviceInfoReq struct {
-	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token"`
+	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7595,10 +7595,10 @@ func (m *DeviceInfoReq) GetToken() string {
 }
 
 type DeviceInfoResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	Version              string   `protobuf:"bytes,2,opt,name=version,proto3" json:"version"`
-	Sn                   string   `protobuf:"bytes,3,opt,name=sn,proto3" json:"sn"`
-	Framework            string   `protobuf:"bytes,4,opt,name=framework,proto3" json:"framework"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Version              string   `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Sn                   string   `protobuf:"bytes,3,opt,name=sn,proto3" json:"sn,omitempty"`
+	Framework            string   `protobuf:"bytes,4,opt,name=framework,proto3" json:"framework,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7668,7 +7668,7 @@ func (m *DeviceInfoResp) GetFramework() string {
 // 获取磁盘空间
 // "/box/diskCount/1.0.0"
 type DiskCountReq struct {
-	PeerId               string   `protobuf:"bytes,1,opt,name=peerId,proto3" json:"peerId"`
+	PeerId               string   `protobuf:"bytes,1,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7715,9 +7715,9 @@ func (m *DiskCountReq) GetPeerId() string {
 }
 
 type DiskCountResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	DeviceCount          uint64   `protobuf:"varint,2,opt,name=deviceCount,proto3" json:"deviceCount"`
-	DeviceUsed           uint64   `protobuf:"varint,3,opt,name=deviceUsed,proto3" json:"deviceUsed"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	DeviceCount          uint64   `protobuf:"varint,2,opt,name=deviceCount,proto3" json:"deviceCount,omitempty"`
+	DeviceUsed           uint64   `protobuf:"varint,3,opt,name=deviceUsed,proto3" json:"deviceUsed,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7780,8 +7780,8 @@ func (m *DiskCountResp) GetDeviceUsed() uint64 {
 // 创建钱包地址 0 所有钱包，1 Fil钱包，2 ETH系列钱包
 // "/box/createWallet/1.0.0"
 type CreateWalletReq struct {
-	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7837,8 +7837,8 @@ func (m *CreateWalletReq) GetToken() string {
 // 获取钱包地址 0 所有钱包，1 Fil钱包，2 ETH系列钱包
 // "/box/getWallet/1.0.0"
 type GetWalletReq struct {
-	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7892,8 +7892,8 @@ func (m *GetWalletReq) GetToken() string {
 }
 
 type WalletItem struct {
-	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type"`
-	Address              string   `protobuf:"bytes,2,opt,name=address,proto3" json:"address"`
+	Type                 int32    `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
+	Address              string   `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -7947,8 +7947,8 @@ func (m *WalletItem) GetAddress() string {
 }
 
 type GetWalletResp struct {
-	Code                 Code          `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	Items                []*WalletItem `protobuf:"bytes,2,rep,name=items,proto3" json:"items"`
+	Code                 Code          `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Items                []*WalletItem `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -8004,8 +8004,8 @@ func (m *GetWalletResp) GetItems() []*WalletItem {
 // 获取钱包地址的key 0 所有钱包，1 Fil钱包，2 ETH系列钱包
 // "/box/getWalletKey/1.0.0"
 type GetWalletKeyReq struct {
-	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token"`
-	Address              string   `protobuf:"bytes,2,opt,name=address,proto3" json:"address"`
+	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Address              string   `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8059,8 +8059,8 @@ func (m *GetWalletKeyReq) GetAddress() string {
 }
 
 type GetWalletKeyResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	AddressKey           string   `protobuf:"bytes,2,opt,name=addressKey,proto3" json:"addressKey"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	AddressKey           string   `protobuf:"bytes,2,opt,name=addressKey,proto3" json:"addressKey,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8117,13 +8117,13 @@ func (m *GetWalletKeyResp) GetAddressKey() string {
 // 同步数据到FileCoin
 // "/box/sync_fil/1.0.0"
 type EnableFilReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Enable               bool     `protobuf:"varint,3,opt,name=enable,proto3" json:"enable"`
-	RelayHost            string   `protobuf:"bytes,4,opt,name=relayHost,proto3" json:"relayHost"`
-	MinerId              string   `protobuf:"bytes,5,opt,name=minerId,proto3" json:"minerId"`
-	Price                string   `protobuf:"bytes,6,opt,name=price,proto3" json:"price"`
-	SizeSum              int64    `protobuf:"varint,7,opt,name=sizeSum,proto3" json:"sizeSum"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Enable               bool     `protobuf:"varint,3,opt,name=enable,proto3" json:"enable,omitempty"`
+	RelayHost            string   `protobuf:"bytes,4,opt,name=relayHost,proto3" json:"relayHost,omitempty"`
+	MinerId              string   `protobuf:"bytes,5,opt,name=minerId,proto3" json:"minerId,omitempty"`
+	Price                string   `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
+	SizeSum              int64    `protobuf:"varint,7,opt,name=sizeSum,proto3" json:"sizeSum,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8215,11 +8215,11 @@ func (m *EnableFilReq) GetSizeSum() int64 {
 //备份文件
 // "/lotus/filecoinBackup"
 type UploadFileToFilcoinReq struct {
-	IpfsCid              string   `protobuf:"bytes,1,opt,name=ipfsCid,proto3" json:"ipfsCid"`
-	Data                 []byte   `protobuf:"bytes,2,opt,name=data,proto3" json:"data"`
-	FileSize             int64    `protobuf:"varint,3,opt,name=fileSize,proto3" json:"fileSize"`
-	BytesFrom            int64    `protobuf:"varint,4,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from"`
-	PeerId               string   `protobuf:"bytes,5,opt,name=peerId,proto3" json:"peerId"`
+	IpfsCid              string   `protobuf:"bytes,1,opt,name=ipfsCid,proto3" json:"ipfsCid,omitempty"`
+	Data                 []byte   `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	FileSize             int64    `protobuf:"varint,3,opt,name=fileSize,proto3" json:"fileSize,omitempty"`
+	BytesFrom            int64    `protobuf:"varint,4,opt,name=bytes_from,json=bytesFrom,proto3" json:"bytes_from,omitempty"`
+	PeerId               string   `protobuf:"bytes,5,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8296,7 +8296,7 @@ func (m *UploadFileToFilcoinReq) GetPeerId() string {
 //查询备份状态
 // "/lotus/getBackUpStatus"
 type GetBackUpStatusReq struct {
-	IpfsCid              string   `protobuf:"bytes,1,opt,name=ipfsCid,proto3" json:"ipfsCid"`
+	IpfsCid              string   `protobuf:"bytes,1,opt,name=ipfsCid,proto3" json:"ipfsCid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8343,12 +8343,12 @@ func (m *GetBackUpStatusReq) GetIpfsCid() string {
 }
 
 type GetBackUpStatusResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	DealCid              string   `protobuf:"bytes,2,opt,name=dealCid,proto3" json:"dealCid"`
-	PieceCid             string   `protobuf:"bytes,3,opt,name=pieceCid,proto3" json:"pieceCid"`
-	Status               string   `protobuf:"bytes,4,opt,name=status,proto3" json:"status"`
-	Verified             bool     `protobuf:"varint,5,opt,name=Verified,proto3" json:"Verified"`
-	Duration             uint64   `protobuf:"varint,6,opt,name=Duration,proto3" json:"Duration"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	DealCid              string   `protobuf:"bytes,2,opt,name=dealCid,proto3" json:"dealCid,omitempty"`
+	PieceCid             string   `protobuf:"bytes,3,opt,name=pieceCid,proto3" json:"pieceCid,omitempty"`
+	Status               string   `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	Verified             bool     `protobuf:"varint,5,opt,name=Verified,proto3" json:"Verified,omitempty"`
+	Duration             uint64   `protobuf:"varint,6,opt,name=Duration,proto3" json:"Duration,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8432,7 +8432,7 @@ func (m *GetBackUpStatusResp) GetDuration() uint64 {
 // 获取miner
 // "/api/getMiner"
 type GetMinerReq struct {
-	PeerId               string   `protobuf:"bytes,1,opt,name=peerId,proto3" json:"peerId"`
+	PeerId               string   `protobuf:"bytes,1,opt,name=peerId,proto3" json:"peerId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8479,8 +8479,8 @@ func (m *GetMinerReq) GetPeerId() string {
 }
 
 type GetMinerResp struct {
-	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code"`
-	Miner                []*Miner `protobuf:"bytes,2,rep,name=miner,proto3" json:"miner"`
+	Code                 Code     `protobuf:"varint,1,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Miner                []*Miner `protobuf:"bytes,2,rep,name=miner,proto3" json:"miner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8534,10 +8534,10 @@ func (m *GetMinerResp) GetMiner() []*Miner {
 }
 
 type Miner struct {
-	MinerId              string   `protobuf:"bytes,1,opt,name=MinerId,proto3" json:"MinerId"`
-	Storage              string   `protobuf:"bytes,2,opt,name=Storage,proto3" json:"Storage"`
-	Price                string   `protobuf:"bytes,3,opt,name=Price,proto3" json:"Price"`
-	RelayHost            string   `protobuf:"bytes,4,opt,name=RelayHost,proto3" json:"RelayHost"`
+	MinerId              string   `protobuf:"bytes,1,opt,name=MinerId,proto3" json:"MinerId,omitempty"`
+	Storage              string   `protobuf:"bytes,2,opt,name=Storage,proto3" json:"Storage,omitempty"`
+	Price                string   `protobuf:"bytes,3,opt,name=Price,proto3" json:"Price,omitempty"`
+	RelayHost            string   `protobuf:"bytes,4,opt,name=RelayHost,proto3" json:"RelayHost,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8608,10 +8608,10 @@ func (m *Miner) GetRelayHost() string {
 // 备份记录
 // "/box/cidbackups/list/1.0.0"
 type CidBackupsListReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
-	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset"`
-	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Offset               int32    `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8679,14 +8679,14 @@ func (m *CidBackupsListReq) GetLimit() int32 {
 }
 
 type CidBackupsListItem struct {
-	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	MinerId              string   `protobuf:"bytes,2,opt,name=minerId,proto3" json:"minerId"`
-	Price                string   `protobuf:"bytes,3,opt,name=price,proto3" json:"price"`
-	CreatedAt            int64    `protobuf:"varint,4,opt,name=createdAt,proto3" json:"createdAt"`
-	FileCount            int64    `protobuf:"varint,5,opt,name=fileCount,proto3" json:"fileCount"`
-	SuccessFile          int64    `protobuf:"varint,6,opt,name=successFile,proto3" json:"successFile"`
-	DealCid              string   `protobuf:"bytes,7,opt,name=dealCid,proto3" json:"dealCid"`
-	FileSize             int64    `protobuf:"varint,8,opt,name=fileSize,proto3" json:"fileSize"`
+	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	MinerId              string   `protobuf:"bytes,2,opt,name=minerId,proto3" json:"minerId,omitempty"`
+	Price                string   `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`
+	CreatedAt            int64    `protobuf:"varint,4,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	FileCount            int64    `protobuf:"varint,5,opt,name=fileCount,proto3" json:"fileCount,omitempty"`
+	SuccessFile          int64    `protobuf:"varint,6,opt,name=successFile,proto3" json:"successFile,omitempty"`
+	DealCid              string   `protobuf:"bytes,7,opt,name=dealCid,proto3" json:"dealCid,omitempty"`
+	FileSize             int64    `protobuf:"varint,8,opt,name=fileSize,proto3" json:"fileSize,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8782,11 +8782,11 @@ func (m *CidBackupsListItem) GetFileSize() int64 {
 }
 
 type CidBackupsListResp struct {
-	Nonce                uint32                `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code                  `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string                `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32                 `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
-	Items                []*CidBackupsListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items"`
+	Nonce                uint32                `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code                  `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string                `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32                 `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Items                []*CidBackupsListItem `protobuf:"bytes,5,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -8863,8 +8863,8 @@ func (m *CidBackupsListResp) GetItems() []*CidBackupsListItem {
 // 备份记录
 // "/box/backupcount/list/1.0.0"
 type BackupCountReq struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -8918,10 +8918,10 @@ func (m *BackupCountReq) GetToken() string {
 }
 
 type BackupCountResp struct {
-	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce"`
-	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg"`
-	Total                int32    `protobuf:"varint,4,opt,name=total,proto3" json:"total"`
+	Nonce                uint32   `protobuf:"varint,1,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Code                 Code     `protobuf:"varint,2,opt,name=code,proto3,enum=Code" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total                int32    `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`

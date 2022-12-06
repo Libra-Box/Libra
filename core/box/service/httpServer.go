@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gogo/protobuf/proto"
@@ -289,17 +288,19 @@ func (s *HttpServer) setCors(r gin.IRouter) {
 }
 
 func respondProto(c *gin.Context, msg proto.Message) {
-	d, _ := json.Marshal(msg)
-	if len(d) <= 1000 {
-		log.Infof("resp: %v", string(d))
-	} else {
-		log.Infof("resp: %v", string(d[:1000]))
-	}
-	if c.ContentType() == "application/x-protobuf" {
-		c.ProtoBuf(http.StatusOK, msg)
-	} else {
-		c.JSON(http.StatusOK, msg)
-	}
+	//d, _ := json.Marshal(msg)
+	//if len(d) <= 1000 {
+	//	log.Infof("resp: %v", string(d))
+	//} else {
+	//	log.Infof("resp: %v", string(d[:1000]))
+	//}
+	log.Infof("resp: %v", msg)
+	c.ProtoBuf(http.StatusOK, msg)
+	//if c.ContentType() == "application/x-protobuf" {
+	//	c.ProtoBuf(http.StatusOK, msg)
+	//} else {
+	//	c.JSON(http.StatusOK, msg)
+	//}
 }
 
 func (s *HttpServer) setDirSizeDirty(c *gin.Context) {
