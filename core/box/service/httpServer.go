@@ -31,7 +31,7 @@ type HttpServer struct {
 	httpHost     string
 	p2pHost      host.Host
 	coreApi      coreiface.CoreAPI
-	messenger    pb.Messenger
+	messenger    *pb.BoxMessenger
 	store        *ds.DbStore
 	SignKey      string
 	JwtKey       string

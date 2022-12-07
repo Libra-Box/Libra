@@ -2,9 +2,7 @@ package pb
 
 import (
 	"context"
-	"github.com/gogo/protobuf/proto"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/libp2p/go-msgio/protoio"
 	"reflect"
@@ -229,12 +227,12 @@ var (
 type MessageHandler func(ctx *Context)
 type HandlersChain []MessageHandler
 
-type Messenger interface {
-	SendMessage(ctx context.Context, protocol protocol.ID, to peer.ID, msg proto.Message) error
-	SendRequest(ctx context.Context, protocol protocol.ID, to peer.ID, req proto.Message) (resp interface{}, err error)
-	SetMessageHandler(proto protocol.ID, h ...MessageHandler)
-	GetNonce() uint32
-}
+//type Messenger interface {
+//	SendMessage(ctx context.Context, protocol protocol.ID, to peer.ID, msg proto.Message) error
+//	SendRequest(ctx context.Context, protocol protocol.ID, to peer.ID, req proto.Message) (resp interface{}, err error)
+//	SetMessageHandler(proto protocol.ID, h ...MessageHandler)
+//	GetNonce() uint32
+//}
 
 type Context struct {
 	context.Context

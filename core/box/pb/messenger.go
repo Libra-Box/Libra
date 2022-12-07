@@ -173,4 +173,4 @@ func (m *BoxMessenger) GetNonce() uint32 {
 	return atomic.AddUint32(&m.msgNonce, 1)
 }
 
-var _ Messenger = &BoxMessenger{}
+//var _ Messenger = &BoxMessenger{}
